@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -6,8 +7,17 @@ import AnimatedSection from "@/components/shared/AnimatedSection";
 import DNAScene from "@/components/3d/DNAScene";
 
 const Services: React.FC = () => {
+  const [scrollY, setScrollY] = useState(0);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -27,11 +37,11 @@ const Services: React.FC = () => {
           <section className="relative py-16 md:py-24 overflow-hidden">
             <div className="container-custom">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <AnimatedSection direction="left">
+                <AnimatedSection direction="left" speed="normal" intensity="medium">
                   <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
                     Our Services
                   </div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                  <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gradient-future">
                     Expert Solutions For Your Digital Needs
                   </h1>
                   <p className="text-lg text-muted-foreground mb-8">
@@ -39,8 +49,15 @@ const Services: React.FC = () => {
                   </p>
                 </AnimatedSection>
                 
-                <AnimatedSection direction="right" className="h-[400px]">
-                  <DNAScene className="w-full h-full" />
+                <AnimatedSection direction="zoom" className="h-[400px] perspective-1000" speed="slow">
+                  <div 
+                    className="w-full h-full transform-3d"
+                    style={{ 
+                      transform: `perspective(1000px) rotateY(${scrollY * 0.02}deg) rotateX(${scrollY * 0.01}deg)`
+                    }}
+                  >
+                    <DNAScene className="w-full h-full" />
+                  </div>
                 </AnimatedSection>
               </div>
             </div>
@@ -49,8 +66,8 @@ const Services: React.FC = () => {
           {/* Services List */}
           <section className="py-16 bg-muted/30" id="website">
             <div className="container-custom">
-              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto" direction="zoom">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gradient-future">
                   Our Comprehensive Services
                 </h2>
                 <p className="text-muted-foreground text-lg">
@@ -60,7 +77,7 @@ const Services: React.FC = () => {
 
               <div className="space-y-24">
                 {/* Website Development */}
-                <AnimatedSection className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <AnimatedSection className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" id="website-section">
                   <div className="order-2 lg:order-1">
                     <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
                       Website Development
@@ -78,28 +95,28 @@ const Services: React.FC = () => {
                         "Performance optimization for faster loading"
                       ].map((item, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
+                          <span className="text-primary neon-glow mr-2">✓</span>
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="card-hover glass rounded-xl overflow-hidden shadow-lg order-1 lg:order-2">
+                  <div className="card-futuristic order-1 lg:order-2 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                       alt="Website Development"
-                      className="w-full h-64 object-cover object-center"
+                      className="w-full h-64 object-cover object-center rounded-lg transform transition-transform duration-700 hover:scale-105"
                     />
                   </div>
                 </AnimatedSection>
 
                 {/* Mobile App Development */}
                 <AnimatedSection className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" id="mobile">
-                  <div className="card-hover glass rounded-xl overflow-hidden shadow-lg">
+                  <div className="card-futuristic">
                     <img 
                       src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                       alt="Mobile App Development"
-                      className="w-full h-64 object-cover object-center"
+                      className="w-full h-64 object-cover object-center rounded-lg transform transition-transform duration-700 hover:scale-105"
                     />
                   </div>
                   <div>
@@ -119,7 +136,7 @@ const Services: React.FC = () => {
                         "Continuous testing and quality assurance"
                       ].map((item, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
+                          <span className="text-primary neon-glow mr-2">✓</span>
                           <span>{item}</span>
                         </li>
                       ))}
@@ -127,7 +144,7 @@ const Services: React.FC = () => {
                   </div>
                 </AnimatedSection>
 
-                {/* Other services... */}
+                {/* Coding Assistance */}
                 <AnimatedSection className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" id="assistance">
                   <div className="order-2 lg:order-1">
                     <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
@@ -146,17 +163,17 @@ const Services: React.FC = () => {
                         "Legacy system modernization"
                       ].map((item, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
+                          <span className="text-primary neon-glow mr-2">✓</span>
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="card-hover glass rounded-xl overflow-hidden shadow-lg order-1 lg:order-2">
+                  <div className="card-futuristic order-1 lg:order-2 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" 
                       alt="Coding Assistance"
-                      className="w-full h-64 object-cover object-center"
+                      className="w-full h-64 object-cover object-center rounded-lg transform transition-transform duration-700 hover:scale-105"
                     />
                   </div>
                 </AnimatedSection>

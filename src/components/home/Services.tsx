@@ -11,23 +11,30 @@ interface ServiceCardProps {
   icon: React.ReactNode;
   delay: number;
   link: string;
+  index: number;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, delay, link }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, delay, link, index }) => {
+  // Alternate animation directions for a more dynamic feel
+  const directions = ["up", "zoom", "left", "right", "zoom", "up"] as const;
+  const direction = directions[index % directions.length];
+  
   return (
     <AnimatedSection
-      className="card-hover glass rounded-xl p-6 flex flex-col h-full"
+      className="card-futuristic flex flex-col h-full"
       delay={delay}
-      direction="up"
+      direction={direction}
+      speed="normal"
+      intensity={index % 2 === 0 ? "medium" : "strong"}
     >
-      <div className="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-5">
+      <div className="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-5 neon-border">
         {icon}
       </div>
       <h3 className="text-xl font-bold mb-3">{title}</h3>
       <p className="text-muted-foreground mb-5 flex-1">{description}</p>
       <Link
         to={link}
-        className="group inline-flex items-center text-primary font-medium animated-border"
+        className="group inline-flex items-center text-primary font-medium"
       >
         Learn More
         <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
@@ -79,11 +86,11 @@ const Services: React.FC = () => {
   return (
     <section className="py-20 bg-muted/30" id="services">
       <div className="container-custom">
-        <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+        <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto" direction="zoom">
+          <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4 neon-border">
             Our Expertise
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gradient-future">
             Comprehensive Coding Services for Your Digital Needs
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -100,14 +107,15 @@ const Services: React.FC = () => {
               description={service.description}
               link={service.link}
               delay={index * 100}
+              index={index}
             />
           ))}
         </div>
 
-        <AnimatedSection className="text-center mt-12">
+        <AnimatedSection className="text-center mt-12" direction="up" delay={300}>
           <Link
             to="/services"
-            className="btn-hover-effect inline-flex items-center bg-primary text-white px-6 py-3 rounded-lg font-medium"
+            className="btn-futuristic inline-flex items-center"
           >
             View All Services
             <ArrowRight className="ml-2 h-4 w-4" />

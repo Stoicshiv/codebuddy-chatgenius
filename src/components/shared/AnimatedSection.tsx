@@ -6,10 +6,12 @@ interface AnimatedSectionProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "down" | "left" | "right" | "fade";
+  direction?: "up" | "down" | "left" | "right" | "fade" | "zoom" | "rotate"; // Added zoom and rotate
   once?: boolean;
   threshold?: number;
-  id?: string; // Add id prop to the interface
+  id?: string;
+  speed?: "fast" | "normal" | "slow"; // Add animation speed control
+  intensity?: "light" | "medium" | "strong"; // Add animation intensity
 }
 
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({
@@ -19,9 +21,12 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   direction = "up",
   once = true,
   threshold = 0.1,
-  id, // Add id to the component props
+  id,
+  speed = "normal",
+  intensity = "medium",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,6 +34,9 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          if (once) {
+            setHasAnimated(true);
+          }
           if (once && ref.current) {
             observer.unobserve(ref.current);
           }
@@ -43,7 +51,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     );
 
     const currentRef = ref.current;
-    if (currentRef) {
+    if (currentRef && !hasAnimated) {
       observer.observe(currentRef);
     }
 
@@ -52,10 +60,22 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
         observer.unobserve(currentRef);
       }
     };
-  }, [once, threshold]);
+  }, [once, threshold, hasAnimated]);
 
   const getAnimationClass = () => {
-    if (!isVisible) return "opacity-0";
+    if (!isVisible) {
+      // Initial state classes based on direction
+      const initialStates: Record<string, string> = {
+        up: "opacity-0 translate-y-12",
+        down: "opacity-0 -translate-y-12",
+        left: "opacity-0 translate-x-12",
+        right: "opacity-0 -translate-x-12",
+        fade: "opacity-0",
+        zoom: "opacity-0 scale-75",
+        rotate: "opacity-0 rotate-12 scale-95",
+      };
+      return initialStates[direction] || "opacity-0";
+    }
     
     const animations: Record<string, string> = {
       up: "animate-slide-up",
@@ -63,6 +83,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       left: "animate-slide-in-left",
       right: "animate-slide-in-right",
       fade: "animate-fade-in",
+      zoom: "animate-zoom-in",
+      rotate: "animate-rotate-in",
     };
     
     return animations[direction] || "animate-fade-in";
@@ -82,14 +104,34 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     return delayMap[delay] || "";
   };
 
+  const getSpeedClass = () => {
+    const speedMap: Record<string, string> = {
+      fast: "duration-500",
+      normal: "duration-700",
+      slow: "duration-1000",
+    };
+    return speedMap[speed] || "duration-700";
+  };
+
+  const getIntensityClass = () => {
+    const intensityMap: Record<string, string> = {
+      light: "ease-out",
+      medium: "ease-in-out",
+      strong: "ease-in-cubic", 
+    };
+    return intensityMap[intensity] || "ease-in-out";
+  };
+
   return (
     <div
       ref={ref}
-      id={id} // Add the id attribute to the div
+      id={id}
       className={cn(
+        "transition-all transform",
         getAnimationClass(),
         getDelayClass(),
-        "transition-opacity duration-700",
+        getSpeedClass(),
+        getIntensityClass(),
         className
       )}
       style={{ 
