@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnimatedSection from "@/components/shared/AnimatedSection";
-import CodeScene from "@/components/3d/CodeScene";
+import GlobeScene from "@/components/3d/GlobeScene";
 
 const About: React.FC = () => {
   useEffect(() => {
@@ -41,7 +41,7 @@ const About: React.FC = () => {
                 </AnimatedSection>
                 
                 <AnimatedSection direction="right" className="h-[400px]">
-                  <CodeScene className="w-full h-full" />
+                  <GlobeScene className="w-full h-full" />
                 </AnimatedSection>
               </div>
             </div>

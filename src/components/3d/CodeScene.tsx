@@ -1,7 +1,7 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, Float, PerspectiveCamera, Text } from '@react-three/drei';
 import { Color } from 'three';
 import * as THREE from 'three';
 
@@ -9,6 +9,20 @@ const CodeObjects = () => {
   const boxRef = useRef<THREE.Mesh>(null);
   const torusRef = useRef<THREE.Mesh>(null);
   const sphereRef = useRef<THREE.Mesh>(null);
+  const [boxColor, setBoxColor] = useState(new Color('#3e63dd'));
+  const [torusColor, setTorusColor] = useState(new Color('#4cc38a'));
+  const [sphereColor, setSphereColor] = useState(new Color('#e5484d'));
+
+  // Color animation effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBoxColor(new Color(Math.random() * 0xffffff));
+      setTorusColor(new Color(Math.random() * 0xffffff));
+      setSphereColor(new Color(Math.random() * 0xffffff));
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   useFrame((state, delta) => {
     if (boxRef.current) {
@@ -31,21 +45,21 @@ const CodeObjects = () => {
       <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
         <mesh ref={boxRef} position={[-1.5, 0, 0]}>
           <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color={new Color('#3e63dd')} />
+          <meshStandardMaterial color={boxColor} />
         </mesh>
       </Float>
 
       <Float speed={2.5} rotationIntensity={0.5} floatIntensity={1.5}>
         <mesh ref={torusRef} position={[1.5, 0, 0]}>
           <torusGeometry args={[0.7, 0.3, 16, 100]} />
-          <meshStandardMaterial color={new Color('#4cc38a')} />
+          <meshStandardMaterial color={torusColor} />
         </mesh>
       </Float>
 
       <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
         <mesh ref={sphereRef} position={[0, 1.2, 0]}>
           <sphereGeometry args={[0.8, 32, 32]} />
-          <meshStandardMaterial color={new Color('#e5484d')} metalness={0.5} roughness={0.2} />
+          <meshStandardMaterial color={sphereColor} metalness={0.5} roughness={0.2} />
         </mesh>
       </Float>
     </>

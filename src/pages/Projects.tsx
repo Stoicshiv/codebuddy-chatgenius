@@ -1,138 +1,76 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnimatedSection from "@/components/shared/AnimatedSection";
-import CodeScene from "@/components/3d/CodeScene";
-import { ArrowRight, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+import ParticlesScene from "@/components/3d/ParticlesScene";
+import { ArrowRight } from "lucide-react";
 
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  image: string;
-  link: string;
-  technologies: string[];
-  clientName?: string;
-  featured?: boolean;
-}
+const projectsData = [
+  {
+    id: 1,
+    title: "E-commerce Platform",
+    description: "A complete e-commerce solution with product management, cart functionality, and secure checkout process.",
+    image: "https://images.unsplash.com/photo-1523289333742-be1143f6b766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    category: "Web Development",
+    technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+  },
+  {
+    id: 2,
+    title: "Fitness Tracking App",
+    description: "A mobile application for tracking workouts, nutrition, and health metrics with personalized recommendations.",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    category: "Mobile Development",
+    technologies: ["React Native", "Firebase", "Redux", "Health APIs"],
+  },
+  {
+    id: 3,
+    title: "Property Management System",
+    description: "A comprehensive solution for real estate companies to manage properties, tenants, and maintenance requests.",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1073&q=80",
+    category: "Web Development",
+    technologies: ["Angular", ".NET Core", "SQL Server", "Azure"],
+  },
+  {
+    id: 4,
+    title: "Inventory Management Dashboard",
+    description: "A dashboard for tracking inventory levels, sales, and supply chain management with analytics.",
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    category: "Web Development",
+    technologies: ["Vue.js", "Express", "PostgreSQL", "Chart.js"],
+  },
+  {
+    id: 5,
+    title: "Educational Learning Platform",
+    description: "An interactive platform for online courses with video lessons, quizzes, and student progress tracking.",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    category: "Web Development",
+    technologies: ["React", "Node.js", "MongoDB", "AWS"],
+  },
+  {
+    id: 6,
+    title: "Restaurant Ordering System",
+    description: "A digital menu and ordering system for restaurants with kitchen management and payment integration.",
+    image: "https://images.unsplash.com/photo-1601314002592-b8734bca6604?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80",
+    category: "Mobile Development",
+    technologies: ["Flutter", "Firebase", "Stripe", "CloudKit"],
+  },
+];
 
 const Projects: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
-  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const projects: Project[] = [
-    {
-      id: "project1",
-      title: "E-commerce Platform",
-      description: "A comprehensive online shopping platform with advanced product filtering, secure payment processing, and inventory management.",
-      category: "web",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe API"],
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-      link: "#",
-      clientName: "FashionBoutique Inc.",
-      featured: true
-    },
-    {
-      id: "project2",
-      title: "Health & Fitness App",
-      description: "Mobile application for tracking workouts, nutrition, and health metrics with personalized recommendations.",
-      category: "mobile",
-      technologies: ["React Native", "Firebase", "HealthKit API", "Google Fit API"],
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
-      link: "#",
-      clientName: "FitLife Solutions"
-    },
-    {
-      id: "project3",
-      title: "Real Estate Portal",
-      description: "Interactive real estate listing website with map integration, virtual tours, and advanced search functionality.",
-      category: "web",
-      technologies: ["Next.js", "PostgreSQL", "Google Maps API", "AWS S3"],
-      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
-      link: "#",
-      clientName: "HomeQuest Realty",
-      featured: true
-    },
-    {
-      id: "project4",
-      title: "Productivity Dashboard",
-      description: "Team collaboration and project management dashboard with task tracking and performance analytics.",
-      category: "desktop",
-      technologies: ["Electron", "React", "TypeScript", "Chart.js"],
-      image: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80",
-      link: "#",
-      clientName: "ProductivityPro Corp"
-    },
-    {
-      id: "project5",
-      title: "Event Booking Platform",
-      description: "End-to-end event management platform with ticket sales, attendee management, and organizer dashboard.",
-      category: "web",
-      technologies: ["Vue.js", "Laravel", "MySQL", "Stripe"],
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-      link: "#",
-      clientName: "EventMaster Inc."
-    },
-    {
-      id: "project6",
-      title: "Inventory Management System",
-      description: "Comprehensive inventory tracking system with barcode scanning, analytics, and supplier management.",
-      category: "desktop",
-      technologies: ["C#", ".NET", "SQL Server", "WPF"],
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-      link: "#",
-      clientName: "Global Supply Co."
-    },
-    {
-      id: "project7",
-      title: "Food Delivery App",
-      description: "Mobile application for ordering food with real-time tracking, payment processing, and restaurant management.",
-      category: "mobile",
-      technologies: ["Flutter", "Firebase", "Google Maps API", "Stripe"],
-      image: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1664&q=80",
-      link: "#",
-      clientName: "QuickBite Technologies",
-      featured: true
-    },
-    {
-      id: "project8",
-      title: "Learning Management System",
-      description: "Comprehensive e-learning platform with course creation, student management, and progress tracking.",
-      category: "web",
-      technologies: ["React", "Node.js", "MongoDB", "AWS"],
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-      link: "#",
-      clientName: "EduTech Solutions"
-    },
-  ];
-
-  const filters = [
-    { value: "all", label: "All Projects" },
-    { value: "web", label: "Web Development" },
-    { value: "mobile", label: "Mobile Apps" },
-    { value: "desktop", label: "Desktop Software" },
-  ];
-
-  const filteredProjects =
-    activeFilter === "all"
-      ? projects
-      : projects.filter((project) => project.category === activeFilter);
-
   return (
     <>
       <Helmet>
-        <title>Our Projects - CodeBuddy Portfolio</title>
+        <title>Our Projects - CodeBuddy Development Portfolio</title>
         <meta
           name="description"
-          content="Explore CodeBuddy's portfolio of successful web, mobile, and desktop application projects delivered to clients across various industries."
+          content="Explore CodeBuddy's portfolio of successful web and mobile development projects across various industries."
         />
       </Helmet>
 
@@ -148,153 +86,74 @@ const Projects: React.FC = () => {
                     Our Portfolio
                   </div>
                   <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                    Innovative Solutions for Real-World Challenges
+                    Showcasing Our Best Work
                   </h1>
                   <p className="text-lg text-muted-foreground mb-8">
-                    Explore our collection of successful projects that demonstrate our expertise in delivering high-quality digital solutions across various industries.
+                    Explore our collection of successful projects that demonstrate our expertise in creating digital solutions across various industries and technologies.
                   </p>
                 </AnimatedSection>
                 
                 <AnimatedSection direction="right" className="h-[400px]">
-                  <CodeScene className="w-full h-full" />
+                  <ParticlesScene className="w-full h-full" />
                 </AnimatedSection>
               </div>
             </div>
           </section>
 
-          {/* Featured Projects */}
+          {/* Project Showcase */}
           <section className="py-16 bg-muted/30">
             <div className="container-custom">
               <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-                  Featured Work
-                </div>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  Our Highlighted Projects
+                  Our Recent Projects
                 </h2>
                 <p className="text-muted-foreground text-lg">
-                  These projects showcase our ability to solve complex problems with elegant and effective solutions.
+                  Take a look at some of our latest and most successful client projects.
                 </p>
               </AnimatedSection>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {projects
-                  .filter(project => project.featured)
-                  .map((project, index) => (
-                    <AnimatedSection
-                      key={project.id}
-                      className="group relative overflow-hidden rounded-xl shadow-md col-span-1"
-                      delay={index * 100}
-                      direction="up"
-                    >
-                      <div className="aspect-[16/9] overflow-hidden">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 flex flex-col justify-end p-6">
-                        <div className="">
-                          <div className="text-white text-xl font-bold mb-2">{project.title}</div>
-                          <p className="text-white/80 mb-4 text-sm line-clamp-2">{project.description}</p>
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.technologies.slice(0, 3).map((tech) => (
-                              <span key={tech} className="bg-white/10 text-white text-xs px-2 py-1 rounded">
-                                {tech}
-                              </span>
-                            ))}
-                            {project.technologies.length > 3 && (
-                              <span className="bg-white/10 text-white text-xs px-2 py-1 rounded">
-                                +{project.technologies.length - 3}
-                              </span>
-                            )}
-                          </div>
-                          <a
-                            href={project.link}
-                            className="inline-flex items-center text-white text-sm font-medium"
-                          >
-                            View Project
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </a>
-                        </div>
-                      </div>
-                    </AnimatedSection>
-                  ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Project Gallery */}
-          <section className="py-16">
-            <div className="container-custom">
-              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  Our Complete Portfolio
-                </h2>
-                <p className="text-muted-foreground text-lg">
-                  Browse our full range of projects across different categories.
-                </p>
-              </AnimatedSection>
-
-              <div className="flex flex-wrap justify-center gap-2 mb-12">
-                {filters.map((filter) => (
-                  <button
-                    key={filter.value}
-                    onClick={() => setActiveFilter(filter.value)}
-                    className={cn(
-                      "px-4 py-2 rounded-full text-sm font-medium transition-all",
-                      activeFilter === filter.value
-                        ? "bg-primary text-white"
-                        : "bg-muted hover:bg-muted/80 text-foreground"
-                    )}
-                  >
-                    {filter.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                {filteredProjects.map((project, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {projectsData.map((project, index) => (
                   <AnimatedSection
                     key={project.id}
-                    className="group relative overflow-hidden rounded-xl shadow-md"
+                    className="card-hover glass rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl"
                     delay={index * 100}
                     direction="up"
                   >
-                    <div className="aspect-[16/9] overflow-hidden">
+                    <div className="relative overflow-hidden h-52">
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        loading="lazy"
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                       />
+                      <div className="absolute top-3 left-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                        {project.category}
+                      </div>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <div className="text-white text-xl font-bold mb-2">{project.title}</div>
-                        <p className="text-white/80 mb-4 text-sm line-clamp-2">{project.description}</p>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.technologies.slice(0, 3).map((tech) => (
-                            <span key={tech} className="bg-white/10 text-white text-xs px-2 py-1 rounded">
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                      <p className="text-muted-foreground mb-4 text-sm">
+                        {project.description}
+                      </p>
+                      <div className="mb-4">
+                        <div className="flex flex-wrap gap-2">
+                          {project.technologies.map((tech, i) => (
+                            <span
+                              key={i}
+                              className="bg-primary/10 text-primary text-xs px-2 py-1 rounded"
+                            >
                               {tech}
                             </span>
                           ))}
-                          {project.technologies.length > 3 && (
-                            <span className="bg-white/10 text-white text-xs px-2 py-1 rounded">
-                              +{project.technologies.length - 3}
-                            </span>
-                          )}
                         </div>
-                        <a
-                          href={project.link}
-                          className="inline-flex items-center text-white text-sm font-medium"
-                        >
-                          View Project
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
                       </div>
+                      <Link
+                        to="#"
+                        className="group inline-flex items-center text-primary font-medium animated-border"
+                      >
+                        View Details
+                        <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
+                      </Link>
                     </div>
                   </AnimatedSection>
                 ))}
@@ -303,17 +162,18 @@ const Projects: React.FC = () => {
           </section>
 
           {/* CTA Section */}
-          <section className="bg-muted/30 py-16">
+          <section className="py-16">
             <div className="container-custom">
-              <AnimatedSection className="text-center max-w-3xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  Ready to Build Your Next Project?
-                </h2>
-                <p className="text-muted-foreground text-lg mb-8">
-                  Contact our team today to discuss how we can help bring your vision to life with our expertise.
+              <AnimatedSection className="bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl p-8 md:p-12 text-center">
+                <h2 className="text-3xl font-bold mb-4">Ready to Start Your Project?</h2>
+                <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Contact us today to discuss your project requirements and see how our development expertise can help bring your vision to life.
                 </p>
-                <Link to="/contact" className="btn-hover-effect inline-flex items-center bg-primary text-white px-6 py-3 rounded-lg font-medium">
-                  Start Your Project
+                <Link
+                  to="/contact"
+                  className="btn-hover-effect bg-primary text-white px-6 py-3 rounded-lg font-medium inline-flex items-center"
+                >
+                  Get in Touch
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </AnimatedSection>
