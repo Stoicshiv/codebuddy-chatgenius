@@ -9,6 +9,7 @@ interface AnimatedSectionProps {
   direction?: "up" | "down" | "left" | "right" | "fade";
   once?: boolean;
   threshold?: number;
+  id?: string; // Add id prop to the interface
 }
 
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({
@@ -18,6 +19,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   direction = "up",
   once = true,
   threshold = 0.1,
+  id, // Add id to the component props
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -83,6 +85,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   return (
     <div
       ref={ref}
+      id={id} // Add the id attribute to the div
       className={cn(
         getAnimationClass(),
         getDelayClass(),
