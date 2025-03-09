@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Float, PerspectiveCamera } from '@react-three/drei';
 import { Color } from 'three';
+import * as THREE from 'three';
 
 const CodeObjects = () => {
   const boxRef = useRef<THREE.Mesh>(null);
