@@ -13,9 +13,9 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
           {/* Company Info */}
           <div>
-            <Link to="/" className="flex items-center gap-2 mb-4" aria-label="CodeBuddy Home">
+            <Link to="/" className="flex items-center gap-2 mb-4" aria-label="WeCode Home">
               <Code className="w-6 h-6 text-primary" />
-              <span className="text-xl font-bold text-white">CodeBuddy</span>
+              <span className="text-xl font-bold text-white">WeCode</span>
             </Link>
             <p className="text-gray-300 mb-4">
               Professional website and app building services. Expert coding assistance for entrepreneurs and businesses.
@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                 <span className="text-gray-300">
-                  123 Tech Street, Silicon Valley, CA 94043
+                  VIT Bhopal Kothri, Sehore, 466114 MP
                 </span>
               </li>
               <li className="flex items-center">
@@ -98,10 +98,10 @@ const Footer: React.FC = () => {
               <li className="flex items-center">
                 <Mail className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
                 <a 
-                  href="mailto:info@codebuddy.com" 
+                  href="mailto:shivrajsuman2005@gmail.com" 
                   className="text-gray-300 hover:text-primary transition-colors"
                 >
-                  info@codebuddy.com
+                  shivrajsuman2005@gmail.com
                 </a>
               </li>
             </ul>
@@ -111,7 +111,7 @@ const Footer: React.FC = () => {
         {/* Copyright */}
         <div className="pt-8 border-t border-gray-700 text-center md:text-left md:flex md:justify-between">
           <p className="text-gray-400 text-sm">
-            © {currentYear} CodeBuddy. All rights reserved.
+            © {currentYear} WeCode. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex flex-wrap justify-center md:justify-end space-x-6">

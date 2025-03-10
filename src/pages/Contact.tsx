@@ -54,10 +54,10 @@ const Contact: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us - CodeBuddy Development Team</title>
+        <title>Contact Us - WeCode Development Team</title>
         <meta
           name="description"
-          content="Get in touch with the CodeBuddy team to discuss your project requirements or inquire about our development services."
+          content="Get in touch with the WeCode team to discuss your project requirements or inquire about our development services."
         />
       </Helmet>
 
@@ -198,8 +198,8 @@ const Contact: React.FC = () => {
                         <Mail className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
                         <div>
                           <h3 className="font-medium">Email</h3>
-                          <a href="mailto:info@codebuddy.com" className="text-muted-foreground hover:text-primary transition-colors">
-                            info@codebuddy.com
+                          <a href="mailto:shivrajsuman2005@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                            shivrajsuman2005@gmail.com
                           </a>
                         </div>
                       </div>
@@ -217,9 +217,9 @@ const Contact: React.FC = () => {
                         <div>
                           <h3 className="font-medium">Office</h3>
                           <address className="text-muted-foreground not-italic">
-                            123 Tech Park, Suite 456<br />
-                            San Francisco, CA 94107<br />
-                            United States
+                            VIT Bhopal Kothri<br />
+                            Sehore, 466114 MP<br />
+                            India
                           </address>
                         </div>
                       </div>
@@ -252,14 +252,14 @@ const Contact: React.FC = () => {
               
               <AnimatedSection className="rounded-xl overflow-hidden shadow-lg h-[400px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0976204287776!2d-122.40384372427554!3d37.78824997186267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858085891d21f1%3A0xcab857ff1056557c!2sMarket%20St%2C%20San%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1686969358872!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3669.1597300126984!2d77.05631607518652!3d23.12743991472215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3764d05a4b7ce871%3A0xb57d51de54db68bd!2sVIT%20Bhopal!5e0!3m2!1sen!2sin!4v1718023271209!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen={false}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="CodeBuddy Office Location"
+                  title="WeCode Office Location"
                 ></iframe>
               </AnimatedSection>
             </div>

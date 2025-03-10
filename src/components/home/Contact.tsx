@@ -59,8 +59,8 @@ const Contact: React.FC = () => {
     {
       icon: <Mail className="w-5 h-5 text-primary" />,
       title: "Email Us",
-      content: "info@codebuddy.com",
-      link: "mailto:info@codebuddy.com",
+      content: "shivrajsuman2005@gmail.com",
+      link: "mailto:shivrajsuman2005@gmail.com",
     },
     {
       icon: <Phone className="w-5 h-5 text-primary" />,
@@ -71,7 +71,7 @@ const Contact: React.FC = () => {
     {
       icon: <MapPin className="w-5 h-5 text-primary" />,
       title: "Visit Us",
-      content: "123 Tech Street, Silicon Valley, CA 94043",
+      content: "VIT Bhopal Kothri, Sehore, 466114 MP",
       link: "https://maps.google.com",
     },
   ];
@@ -246,8 +246,8 @@ const Contact: React.FC = () => {
               
               <div className="rounded-xl overflow-hidden shadow-lg h-64 lg:h-auto mt-8 lg:mt-0">
                 <iframe
-                  title="CodeBuddy Office Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101408.22405348163!2d-122.1491522!3d37.42954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80857efed247ab05%3A0xeac0f3baf773a53a!2sSilicon%20Valley!5e0!3m2!1sen!2sus!4v1657662446467!5m2!1sen!2sus"
+                  title="WeCode Office Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3669.1597300126984!2d77.05631607518652!3d23.12743991472215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3764d05a4b7ce871%3A0xb57d51de54db68bd!2sVIT%20Bhopal!5e0!3m2!1sen!2sin!4v1718023271209!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

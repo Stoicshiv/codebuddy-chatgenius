@@ -84,10 +84,10 @@ const Team: React.FC = () => {
   const team: TeamMember[] = [
     {
       id: "member1",
-      name: "Alex Johnson",
-      role: "Lead Developer",
+      name: "Shivraj Suman",
+      role: "Founder",
       image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      bio: "Alex has 10+ years of experience in full-stack development with expertise in React and Node.js.",
+      bio: "Shivraj has extensive expertise in software development and leadership, guiding WeCode's vision and strategy.",
       social: {
         github: "https://github.com",
         twitter: "https://twitter.com",
@@ -96,10 +96,10 @@ const Team: React.FC = () => {
     },
     {
       id: "member2",
-      name: "Samantha Patel",
-      role: "UX/UI Designer",
+      name: "Shaurya Pethe",
+      role: "Co-founder",
       image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80",
-      bio: "Samantha creates intuitive and beautiful user interfaces with a focus on accessibility and user experience.",
+      bio: "Shaurya heads our business development and client relations, ensuring WeCode delivers exceptional value and service.",
       social: {
         twitter: "https://twitter.com",
         linkedin: "https://linkedin.com",
@@ -107,10 +107,10 @@ const Team: React.FC = () => {
     },
     {
       id: "member3",
-      name: "Marcus Chen",
-      role: "Mobile Developer",
+      name: "Nikhil Hegde",
+      role: "Lead Programmer",
       image: "https://images.unsplash.com/photo-1563237023-b1e970526dcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80",
-      bio: "Marcus specializes in native and cross-platform mobile development, creating seamless experiences on iOS and Android.",
+      bio: "Nikhil specializes in backend development and architecture, creating robust and scalable solutions for our clients.",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -118,10 +118,10 @@ const Team: React.FC = () => {
     },
     {
       id: "member4",
-      name: "Julia Rodriguez",
-      role: "Backend Engineer",
+      name: "Harshit Maurya",
+      role: "Lead Programmer",
       image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      bio: "Julia builds robust and scalable backend systems, with expertise in databases and API design.",
+      bio: "Harshit leads our frontend development efforts, creating intuitive and beautiful user interfaces with a focus on performance.",
       social: {
         github: "https://github.com",
         twitter: "https://twitter.com",

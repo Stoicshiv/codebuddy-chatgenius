@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
     >
       <div className="container-custom flex justify-between items-center py-4">
         <Link to="/" className="text-2xl font-bold text-gradient-future">
-          CodeBuddy
+          WeCode
         </Link>
 
         {/* Desktop Navigation */}

@@ -167,7 +167,7 @@ const Pricing: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Pricing & Plans - CodeBuddy Developer Services</title>
+        <title>Pricing & Plans - WeCode Developer Services</title>
         <meta
           name="description"
           content="Hire expert coders starting from just ₹300. Choose from our range of membership plans or create your own custom package tailored to your needs."
@@ -442,7 +442,7 @@ const Pricing: React.FC = () => {
                   Why Choose Us
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  The CodeBuddy Advantage
+                  The WeCode Advantage
                 </h2>
                 <p className="text-muted-foreground text-lg">
                   We combine technical expertise with business insight to deliver outstanding results.
