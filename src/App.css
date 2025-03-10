@@ -44,136 +44,14 @@
   }
 }
 
-/* Price tag animation */
-@keyframes price-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.price-highlight {
-  animation: price-pulse 2s infinite ease-in-out;
-}
-
-/* Badge glow animation */
-@keyframes badge-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 122, 255, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(0, 122, 255, 0.8);
-  }
-}
-
-.badge-premium {
-  animation: badge-glow 3s infinite ease-in-out;
-}
-
-/* Pricing card hover effects */
-.pricing-card {
-  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-}
-
-.pricing-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(31, 38, 135, 0.2);
-}
-
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .card {
     padding: 1em;
   }
-  
-  .container-custom {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
 }
 
-/* Enhanced 3D tilt effect */
-.tilt-card {
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
-}
-
-.tilt-card:hover {
-  transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
-}
-
-.tilt-card-content {
-  transform: translateZ(20px);
-}
-
-/* Enhanced utility classes */
+/* Utility classes */
 .read-the-docs {
   color: #888;
-}
-
-/* Gradient text animation */
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animated-gradient-text {
-  background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8, #1e40af);
-  background-size: 300% 100%;
-  animation: gradient-shift 8s infinite;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Floating animation for 3D elements */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.floating-element {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Shimmer effect for borders */
-@keyframes border-shimmer {
-  0% {
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
-  }
-  50% {
-    border-color: rgba(59, 130, 246, 0.8);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-  }
-  100% {
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
-  }
-}
-
-.shimmer-border {
-  animation: border-shimmer 3s infinite ease-in-out;
 }
