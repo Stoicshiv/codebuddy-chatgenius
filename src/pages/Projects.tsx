@@ -67,10 +67,10 @@ const Projects: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Our Projects - CodeBuddy Development Portfolio</title>
+        <title>Our Projects - PixelForge Development Portfolio</title>
         <meta
           name="description"
-          content="Explore CodeBuddy's portfolio of successful web and mobile development projects across various industries."
+          content="Explore PixelForge's portfolio of successful web and mobile development projects across various industries."
         />
       </Helmet>
 

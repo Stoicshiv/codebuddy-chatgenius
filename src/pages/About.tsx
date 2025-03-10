@@ -165,7 +165,7 @@ const About: React.FC = () => {
                     delay={index * 100}
                   >
                     <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                      {event.year}
+                      {index + 1}
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] card-hover glass rounded-xl p-4 md:p-6">
                       <h3 className="text-xl font-bold mb-1">{event.title}</h3>
@@ -175,6 +175,92 @@ const About: React.FC = () => {
                   </AnimatedSection>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* Team Section */}
+          <section className="py-16 bg-muted/30">
+            <div className="container-custom">
+              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
+                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                  Our Team
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                  Meet the Experts Behind PixelForge
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  Our talented team of developers and designers is dedicated to creating exceptional digital experiences.
+                </p>
+              </AnimatedSection>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {[
+                  {
+                    name: "Shivraj Suman",
+                    role: "Founder",
+                    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                    bio: "Tech enthusiast with a passion for creating innovative solutions that solve real-world problems."
+                  },
+                  {
+                    name: "Shaurya Pethe",
+                    role: "Co-founder",
+                    image: "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
+                    bio: "Creative developer with expertise in front-end technologies and user experience design."
+                  },
+                  {
+                    name: "Nikhil Hegde",
+                    role: "Lead Programmer",
+                    image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80",
+                    bio: "Back-end specialist with a focus on building scalable, efficient systems and databases."
+                  },
+                  {
+                    name: "Harshit Maurya",
+                    role: "Lead Programmer",
+                    image: "https://images.unsplash.com/photo-1584999734482-0361aecad844?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80",
+                    bio: "Full-stack developer with expertise in mobile app development and cloud solutions."
+                  }
+                ].map((member, index) => (
+                  <AnimatedSection
+                    key={member.name}
+                    className="card-hover glass rounded-xl overflow-hidden text-center"
+                    delay={index * 100}
+                    direction="up"
+                  >
+                    <div className="relative overflow-hidden h-64">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-1">{member.name}</h3>
+                      <p className="text-primary font-medium mb-3">{member.role}</p>
+                      <p className="text-muted-foreground text-sm">{member.bio}</p>
+                    </div>
+                  </AnimatedSection>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Location Section */}
+          <section className="py-16">
+            <div className="container-custom">
+              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
+                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                  Our Location
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                  Where to Find Us
+                </h2>
+                <p className="text-muted-foreground text-lg mb-6">
+                  We're headquartered at VIT Bhopal Kothri, Sehore, 466114 MP, with a team that collaborates both in-person and remotely.
+                </p>
+                <p className="text-lg font-medium">
+                  Contact: <a href="mailto:shivrajsuman2005@gmail.com" className="text-primary">shivrajsuman2005@gmail.com</a> | <a href="tel:+917600267733" className="text-primary">+91 7600267733</a>
+                </p>
+              </AnimatedSection>
             </div>
           </section>
         </main>

@@ -19,10 +19,10 @@ const Index: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>CodeBuddy - Professional Website & App Development Services</title>
+        <title>PixelForge - Professional Website & App Development Services</title>
         <meta
           name="description"
-          content="CodeBuddy offers professional website and app development services, along with expert coding assistance for entrepreneurs and businesses."
+          content="PixelForge offers professional website and app development services, along with expert coding assistance for entrepreneurs and businesses."
         />
         <meta
           name="keywords"
@@ -30,16 +30,16 @@ const Index: React.FC = () => {
         />
         {/* Open Graph / Social Media Tags */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="CodeBuddy - Professional Website & App Development" />
+        <meta property="og:title" content="PixelForge - Professional Website & App Development" />
         <meta
           property="og:description"
           content="Expert coding services for websites, mobile apps, and software solutions."
         />
-        <meta property="og:url" content="https://codebuddy.com" />
-        <meta property="og:site_name" content="CodeBuddy" />
+        <meta property="og:url" content="https://pixelforge.com" />
+        <meta property="og:site_name" content="PixelForge" />
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="CodeBuddy - Professional Website & App Development" />
+        <meta name="twitter:title" content="PixelForge - Professional Website & App Development" />
         <meta
           name="twitter:description"
           content="Expert coding services for websites, mobile apps, and software solutions."

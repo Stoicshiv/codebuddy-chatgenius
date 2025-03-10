@@ -14,7 +14,7 @@ interface Message {
 const INITIAL_MESSAGES: Message[] = [
   {
     id: "welcome",
-    text: "Hi there! 👋 I'm CodeBuddy's assistant. How can I help you with your coding project today?",
+    text: "Hi there! 👋 I'm PixelForge's assistant. How can I help you with your coding project today?",
     isBot: true,
     timestamp: new Date(),
   },
@@ -76,13 +76,15 @@ const ChatBot: React.FC = () => {
       
       // Very basic response logic - would be replaced with actual API call
       if (userMessage.toLowerCase().includes("pricing") || userMessage.toLowerCase().includes("cost")) {
-        response = "Our pricing varies based on project complexity. For website development, prices start at $2,000. For mobile apps, prices start at $5,000. Would you like to schedule a consultation for a personalized quote?";
+        response = "Our pricing varies based on project complexity. Basic packages start at ₹299, Intermediate at ₹999, Advanced at ₹1899, and Ultra at ₹2299. Would you like to schedule a consultation for a personalized quote?";
       } else if (userMessage.toLowerCase().includes("contact") || userMessage.toLowerCase().includes("call") || userMessage.toLowerCase().includes("email")) {
-        response = "You can reach our team at info@codebuddy.com or call us at +1 (234) 567-890. Alternatively, you can fill out the contact form on our website and we'll get back to you within 24 hours.";
+        response = "You can reach our team at shivrajsuman2005@gmail.com or call us at +91 7600267733. Alternatively, you can fill out the contact form on our website and we'll get back to you within 24 hours.";
       } else if (userMessage.toLowerCase().includes("time") || userMessage.toLowerCase().includes("deadline") || userMessage.toLowerCase().includes("how long")) {
-        response = "Project timelines depend on complexity and requirements. Simple websites typically take 2-4 weeks, while more complex applications may take 1-3 months. We'll provide a detailed timeline during our initial consultation.";
+        response = "We deliver products under 100 minutes on demand (terms and conditions apply). For larger projects, timelines depend on complexity and requirements. We'll provide a detailed timeline during our initial consultation.";
+      } else if (userMessage.toLowerCase().includes("location") || userMessage.toLowerCase().includes("address") || userMessage.toLowerCase().includes("where")) {
+        response = "We're located at VIT Bhopal Kothri, Sehore, 466114 MP, India.";
       } else {
-        response = "Thank you for your message. One of our coding experts will review your inquiry and get back to you shortly. If you'd like immediate assistance, please call us or fill out the contact form for a consultation.";
+        response = "Thank you for your message. One of our coding experts will review your inquiry and get back to you shortly. If you'd like immediate assistance, please call us at +91 7600267733 or fill out the contact form for a consultation.";
       }
       
       addMessage(response, true);
@@ -139,7 +141,7 @@ const ChatBot: React.FC = () => {
           >
             <div className="flex items-center space-x-2">
               <Bot className="text-primary" size={20} />
-              <h3 className="font-medium">CodeBuddy Assistant</h3>
+              <h3 className="font-medium">PixelForge Assistant</h3>
             </div>
             <div className="flex items-center space-x-2">
               <button
