@@ -13,12 +13,15 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
           {/* Company Info */}
           <div>
-            <Link to="/" className="flex items-center gap-2 mb-4" aria-label="WeCode Home">
+            <Link to="/" className="flex items-center gap-2 mb-4" aria-label="PixelForge Home">
               <Code className="w-6 h-6 text-primary" />
-              <span className="text-xl font-bold text-white">WeCode</span>
+              <span className="text-xl font-bold text-white">PixelForge</span>
             </Link>
             <p className="text-gray-300 mb-4">
               Professional website and app building services. Expert coding assistance for entrepreneurs and businesses.
+            </p>
+            <p className="text-gray-300 mb-4">
+              <strong>Fast Delivery:</strong> We deliver products under 100 mins on demand. Terms and conditions apply.
             </p>
             <div className="flex space-x-4">
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
@@ -89,10 +92,10 @@ const Footer: React.FC = () => {
               <li className="flex items-center">
                 <Phone className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
                 <a 
-                  href="tel:+1234567890" 
+                  href="tel:+917600267733" 
                   className="text-gray-300 hover:text-primary transition-colors"
                 >
-                  +1 (234) 567-890
+                  +91 7600267733
                 </a>
               </li>
               <li className="flex items-center">
@@ -111,7 +114,7 @@ const Footer: React.FC = () => {
         {/* Copyright */}
         <div className="pt-8 border-t border-gray-700 text-center md:text-left md:flex md:justify-between">
           <p className="text-gray-400 text-sm">
-            © {currentYear} WeCode. All rights reserved.
+            © {currentYear} PixelForge. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex flex-wrap justify-center md:justify-end space-x-6">

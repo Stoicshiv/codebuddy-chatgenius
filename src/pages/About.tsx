@@ -14,10 +14,10 @@ const About: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>About CodeBuddy - Our Mission and Team</title>
+        <title>About PixelForge - Our Mission and Team</title>
         <meta
           name="description"
-          content="Learn about CodeBuddy's mission, values, and the team of expert developers behind our coding services."
+          content="Learn about PixelForge's mission, values, and the team of expert developers behind our coding services."
         />
       </Helmet>
 
@@ -36,8 +36,16 @@ const About: React.FC = () => {
                     We Build Digital Solutions That Drive Success
                   </h1>
                   <p className="text-lg text-muted-foreground mb-8">
-                    CodeBuddy was founded in 2018 with a simple mission: to make quality coding and development services accessible to businesses of all sizes. Our team of expert developers, designers, and consultants work together to transform your ideas into powerful digital solutions.
+                    PixelForge was founded in 2024 with a simple mission: to make quality coding and development services accessible to businesses of all sizes. Our team of expert developers, designers, and consultants work together to transform your ideas into powerful digital solutions.
                   </p>
+                  <p className="text-lg text-muted-foreground mb-4">
+                    <strong>Fast Delivery:</strong> We deliver products under 100 mins on demand. Terms and conditions apply:
+                  </p>
+                  <ul className="list-disc pl-6 text-muted-foreground mb-8">
+                    <li>Project must have minimal content requirements</li>
+                    <li>Customer must provide detailed requirements in written format</li>
+                    <li>We are not responsible for any incompatibility between software and hardware</li>
+                  </ul>
                 </AnimatedSection>
                 
                 <AnimatedSection direction="right" className="h-[400px]">
@@ -58,7 +66,7 @@ const About: React.FC = () => {
                   The Principles That Guide Our Work
                 </h2>
                 <p className="text-muted-foreground text-lg">
-                  At CodeBuddy, we believe in creating meaningful digital experiences driven by these core values.
+                  At PixelForge, we believe in creating meaningful digital experiences driven by these core values.
                 </p>
               </AnimatedSection>
 
@@ -111,7 +119,7 @@ const About: React.FC = () => {
                   Our Journey
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  The CodeBuddy Story
+                  The PixelForge Story
                 </h2>
                 <p className="text-muted-foreground text-lg">
                   From a small startup to a leading development firm, our journey has been defined by growth and excellence.
@@ -121,34 +129,34 @@ const About: React.FC = () => {
               <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
                 {[
                   {
-                    year: "2018",
+                    year: "2024 Jan",
                     title: "Foundation",
-                    description: "CodeBuddy was founded with a team of just three developers."
+                    description: "PixelForge was founded with a team of passionate developers led by Shivraj Suman."
                   },
                   {
-                    year: "2019",
+                    year: "2024 Feb",
                     title: "First Major Client",
-                    description: "Secured our first enterprise client and expanded our team to 10 developers."
+                    description: "Secured our first client, Alankarika, and delivered our first successful project."
                   },
                   {
-                    year: "2020",
-                    title: "Remote Transition",
-                    description: "Successfully transitioned to a fully remote team while maintaining productivity."
+                    year: "2024 Mar",
+                    title: "Service Expansion",
+                    description: "Expanded our service offerings to include mobile app development and UI/UX design."
                   },
                   {
-                    year: "2021",
-                    title: "Global Expansion",
-                    description: "Expanded our services to international clients across Europe and Asia."
+                    year: "2024 Apr",
+                    title: "Team Growth",
+                    description: "Added new team members to enhance our development capabilities."
                   },
                   {
-                    year: "2022",
-                    title: "Innovation Lab",
-                    description: "Launched the CodeBuddy Innovation Lab to explore emerging technologies."
+                    year: "2024 May",
+                    title: "Innovation Focus",
+                    description: "Launched rapid development methodology to deliver projects under 100 minutes on demand."
                   },
                   {
-                    year: "2023",
+                    year: "2024 Present",
                     title: "Present Day",
-                    description: "Now a team of 50+ professionals serving clients worldwide with cutting-edge solutions."
+                    description: "Now a growing team serving clients with cutting-edge solutions and rapid development."
                   },
                 ].map((event, index) => (
                   <AnimatedSection
