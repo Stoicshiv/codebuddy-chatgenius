@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/layout/Navbar";
@@ -17,7 +16,11 @@ import {
   Palette, 
   Clock, 
   Shield, 
-  Smartphone 
+  Smartphone,
+  Coffee,
+  Headphones,
+  Laptop,
+  Gift
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -57,7 +60,6 @@ const Pricing: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Calculate custom price based on selections
     const techCosts: Record<string, number> = {
       'html': 50,
       'css': 50,
@@ -90,7 +92,7 @@ const Pricing: React.FC = () => {
   const membershipPlans: PricingPlan[] = [
     {
       name: "Basic",
-      price: 100,
+      price: 299,
       description: "Perfect for simple web projects",
       features: [
         { feature: "Single use", included: true },
@@ -106,7 +108,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: "Intermediate",
-      price: 500,
+      price: 999,
       description: "Great for professional websites",
       features: [
         { feature: "Single use", included: true },
@@ -126,7 +128,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: "Advanced",
-      price: 1000,
+      price: 1899,
       description: "For complete web applications",
       features: [
         { feature: "Single use", included: true },
@@ -145,7 +147,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: "Ultra",
-      price: 2000,
+      price: 2299,
       description: "Premium immersive experiences",
       features: [
         { feature: "Single use", included: true },
@@ -167,10 +169,10 @@ const Pricing: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Pricing & Plans - WeCode Developer Services</title>
+        <title>Pricing & Plans - PixelForge Developer Services</title>
         <meta
           name="description"
-          content="Hire expert coders starting from just ₹300. Choose from our range of membership plans or create your own custom package tailored to your needs."
+          content="Hire expert coders starting from just ₹299. Choose from our range of membership plans or create your own custom package tailored to your needs."
         />
       </Helmet>
 
@@ -194,7 +196,7 @@ const Pricing: React.FC = () => {
                   Flexible Pricing
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gradient-future">
-                  Hire Expert Developers Starting at Just ₹300
+                  Hire Expert Developers Starting at Just ₹299
                 </h1>
                 <p className="text-lg text-muted-foreground mb-8">
                   Choose from our range of membership plans or create your own custom package 
@@ -284,6 +286,81 @@ const Pricing: React.FC = () => {
                     >
                       <Link to="/contact">{plan.cta}</Link>
                     </Button>
+                  </AnimatedSection>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Developer Perks Section */}
+          <section className="py-16">
+            <div className="container-custom">
+              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto" direction="up">
+                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                  Developer Benefits
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                  Perks of Working With Us
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  Join our team of talented developers and enjoy these exclusive benefits
+                </p>
+              </AnimatedSection>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {[
+                  {
+                    icon: <Laptop className="h-10 w-10" />,
+                    title: "Latest Equipment",
+                    description: "Access to high-end development machines and latest software licenses for maximum productivity"
+                  },
+                  {
+                    icon: <Clock className="h-10 w-10" />,
+                    title: "Flexible Hours",
+                    description: "Work on your own schedule with our flexible hours policy to maintain work-life balance"
+                  },
+                  {
+                    icon: <Coffee className="h-10 w-10" />,
+                    title: "Premium Workspace",
+                    description: "Enjoy our modern office with unlimited coffee, snacks, and ergonomic workstations"
+                  },
+                  {
+                    icon: <Code className="h-10 w-10" />,
+                    title: "Technical Growth",
+                    description: "Regular workshops, training sessions, and conference opportunities to enhance your skills"
+                  },
+                  {
+                    icon: <Users className="h-10 w-10" />,
+                    title: "Collaborative Culture",
+                    description: "Work in a supportive team environment with peer code reviews and knowledge sharing"
+                  },
+                  {
+                    icon: <Gift className="h-10 w-10" />,
+                    title: "Project Bonuses",
+                    description: "Earn additional bonuses for completed projects based on client satisfaction and timely delivery"
+                  },
+                  {
+                    icon: <Headphones className="h-10 w-10" />,
+                    title: "Remote Options",
+                    description: "Hybrid work model with the option to work remotely several days a week"
+                  },
+                  {
+                    icon: <Shield className="h-10 w-10" />,
+                    title: "Career Advancement",
+                    description: "Clear career progression paths with regular performance reviews and promotion opportunities"
+                  }
+                ].map((perk, index) => (
+                  <AnimatedSection
+                    key={perk.title}
+                    className="card-futuristic"
+                    delay={index * 100}
+                    direction={index % 4 === 0 ? "up" : index % 4 === 1 ? "zoom" : index % 4 === 2 ? "left" : "right"}
+                  >
+                    <div className="w-16 h-16 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-5 neon-border">
+                      {perk.icon}
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{perk.title}</h3>
+                    <p className="text-muted-foreground">{perk.description}</p>
                   </AnimatedSection>
                 ))}
               </div>
