@@ -135,7 +135,7 @@ const ChatBot: React.FC = () => {
         <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6 shadow-xl">
           <h3 className="text-lg font-medium mb-2">Setup AI Assistant</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-            To enable the AI chat assistant, please enter your OpenAI API key below. 
+            To enable the AI chat assistant, please enter your Hugging Face API key below. 
             Your key is stored locally in your browser and never sent to our servers.
           </p>
           <div className="space-y-4">
@@ -143,8 +143,11 @@ const ChatBot: React.FC = () => {
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter your OpenAI API key"
+              placeholder="Enter your Hugging Face API key"
             />
+            <p className="text-xs text-blue-600 dark:text-blue-400">
+              Get a free API key at <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noreferrer" className="underline">huggingface.co</a>
+            </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <Button 
                 variant="outline" 

@@ -28,10 +28,9 @@ export interface TrainingExample {
 
 export class AIService {
   private static apiKey: string | null = null;
-  private static apiEndpoint: string = "https://api.openai.com/v1/chat/completions";
-  private static model: string = "gpt-4o-mini";
-  private static trainingExamples: TrainingExample[] = [];
+  private static apiEndpoint: string = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf";
   private static isInitialized: boolean = false;
+  private static trainingExamples: TrainingExample[] = [];
 
   // Initialize the service with API key
   static init(apiKey: string): boolean {
@@ -139,41 +138,38 @@ Be helpful, concise, and precise with information. Analyze user requirements and
         return this.getFallbackResponse(userMessage);
       }
 
+      // Prepare conversation context with system prompt and user message
+      const prompt = {
+        inputs: `<s>[INST]<<SYS>>${this.generateSystemPrompt()}<</SYS>>\n\n${userMessage}[/INST]</s>`,
+        parameters: {
+          max_new_tokens: 500,
+          temperature: 0.7,
+          return_full_text: false
+        }
+      };
+
       const response = await fetch(this.apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${this.apiKey}`,
         },
-        body: JSON.stringify({
-          model: this.model,
-          messages: [
-            {
-              role: "system",
-              content: this.generateSystemPrompt(),
-            },
-            {
-              role: "user",
-              content: userMessage,
-            },
-          ],
-          temperature: 0.7,
-          max_tokens: 500,
-        }),
+        body: JSON.stringify(prompt),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.text();
         console.error("AI API Error:", errorData);
-        throw new Error(`AI API Error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
+        throw new Error(`AI API Error: ${response.status} - ${errorData || 'Unknown error'}`);
       }
 
       const data = await response.json();
+      const generatedText = data[0]?.generated_text || "Sorry, I couldn't generate a response.";
       
       return {
-        text: data.choices[0].message.content,
+        text: generatedText,
         confidence: 0.95, // Placeholder for actual confidence score
-        metadata: this.analyzeResponse(data.choices[0].message.content, userMessage),
+        metadata: this.analyzeResponse(generatedText, userMessage),
       };
     } catch (error) {
       console.error("Error getting AI response:", error);

@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Bot, Save, Trash, Plus, Key, RefreshCw } from "lucide-react";
+import { Bot, Save, Trash, Plus, Key, RefreshCw, Link } from "lucide-react";
 
 const AITrainer: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>("");
@@ -85,7 +85,7 @@ const AITrainer: React.FC = () => {
         <CardHeader>
           <CardTitle>AI API Configuration</CardTitle>
           <CardDescription>
-            Configure the AI service with your API key.
+            Configure the AI service with your Hugging Face API key.
             {savedKey && (
               <span className="block mt-2 text-sm text-green-600">
                 ✓ API key is currently set
@@ -94,21 +94,34 @@ const AITrainer: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-2">
-            <Input
-              type="password"
-              placeholder="Enter your AI API key"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              className="flex-1"
-            />
-            <Button onClick={handleSaveApiKey}>
-              <Key className="mr-2 h-4 w-4" /> Save Key
-            </Button>
+          <div className="space-y-4">
+            <div className="flex gap-2">
+              <Input
+                type="password"
+                placeholder="Enter your Hugging Face API key"
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                className="flex-1"
+              />
+              <Button onClick={handleSaveApiKey}>
+                <Key className="mr-2 h-4 w-4" /> Save Key
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground mt-2">
+              For testing without an API key, enter "demo" as the key.
+            </p>
+            <div className="rounded-md bg-blue-50 dark:bg-blue-950 p-4 text-sm">
+              <div className="flex items-center gap-2 font-medium text-blue-800 dark:text-blue-300 mb-1">
+                <Link size={16} />
+                <span>Get a free Hugging Face API token</span>
+              </div>
+              <p className="text-blue-700 dark:text-blue-400">
+                1. Create a free account at <a href="https://huggingface.co/join" target="_blank" rel="noreferrer" className="underline">huggingface.co</a><br />
+                2. Generate an API token at <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noreferrer" className="underline">Settings → Access Tokens</a><br />
+                3. Copy and paste your token above
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground mt-2">
-            For testing without an API key, enter "demo" as the key.
-          </p>
         </CardContent>
       </Card>
       
