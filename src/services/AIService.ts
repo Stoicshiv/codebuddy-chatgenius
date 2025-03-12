@@ -160,6 +160,13 @@ Be helpful, concise, and precise with information. Analyze user requirements and
       if (!response.ok) {
         const errorData = await response.text();
         console.error("AI API Error:", errorData);
+        
+        // If it's an authentication error, fall back to demo mode automatically
+        if (response.status === 401) {
+          toast.error("Authentication failed. Using fallback responses.");
+          return this.getFallbackResponse(userMessage);
+        }
+        
         throw new Error(`AI API Error: ${response.status} - ${errorData || 'Unknown error'}`);
       }
 
@@ -173,7 +180,7 @@ Be helpful, concise, and precise with information. Analyze user requirements and
       };
     } catch (error) {
       console.error("Error getting AI response:", error);
-      toast.error("Failed to get AI response. Please try again.");
+      toast.error("Failed to get AI response. Using fallback mode.");
       
       // Return a fallback response if API call fails
       return this.getFallbackResponse(userMessage);
@@ -216,8 +223,37 @@ Be helpful, concise, and precise with information. Analyze user requirements and
   private static getFallbackResponse(userMessage: string): AIResponse {
     const lowerMsg = userMessage.toLowerCase();
     
-    // Check for specific queries first
-    if (lowerMsg.includes("pricing") || lowerMsg.includes("cost")) {
+    // Use any training examples if available
+    const examples = this.getTrainingExamples();
+    if (examples.length > 0) {
+      // Try to find a training example that matches the user message
+      for (const example of examples) {
+        // Simple keyword matching to find relevant examples
+        const exampleKeywords = example.input.toLowerCase().split(/\s+/);
+        const userKeywords = lowerMsg.split(/\s+/);
+        
+        // Count matching keywords
+        const matchingKeywords = exampleKeywords.filter(keyword => 
+          userKeywords.some(userKeyword => userKeyword.includes(keyword) || keyword.includes(userKeyword))
+        );
+        
+        // If there's a reasonable match (30% or more keywords match), use this example
+        if (matchingKeywords.length > 0 && 
+            (matchingKeywords.length / exampleKeywords.length > 0.3 || 
+             matchingKeywords.length >= 3)) {
+          return {
+            text: example.expectedOutput,
+            confidence: 0.8,
+            metadata: {
+              detectedIntent: example.category || "matched_example"
+            }
+          };
+        }
+      }
+    }
+    
+    // Check for specific queries if no matching example was found
+    if (lowerMsg.includes("pricing") || lowerMsg.includes("cost") || lowerMsg.includes("price")) {
       return {
         text: "Our pricing varies based on project complexity. Basic packages start at ₹299, Intermediate at ₹999, Advanced at ₹1899, and Ultra at ₹2299. Would you like to schedule a consultation for a personalized quote?",
         confidence: 0.9,
@@ -246,6 +282,29 @@ Be helpful, concise, and precise with information. Analyze user requirements and
         }
       };
     }
+    
+    if (lowerMsg.includes("location") || lowerMsg.includes("address") || lowerMsg.includes("where")) {
+      return {
+        text: "We're located at VIT Bhopal Kothri, Sehore, 466114 MP, India. Feel free to visit us or contact us via email or phone for remote consultations.",
+        confidence: 0.9,
+        metadata: {
+          detectedIntent: "location_inquiry"
+        }
+      };
+    }
+    
+    // Randomly select one of several different specific responses for general inquiries
+    const generalResponses = [
+      "Hi there! I'd be happy to help with your coding needs. We offer website development, mobile app development, e-commerce solutions, and more. Could you tell me more about your specific project requirements?",
+      
+      "Thanks for reaching out to PixelForge! We specialize in creating websites, web applications, mobile apps, and e-commerce platforms. What kind of project are you interested in?",
+      
+      "Welcome to PixelForge! I'm here to help with your technical needs. Our team excels in building websites, apps, and custom software solutions. What can we build for you today?",
+      
+      "Hello! I'm PixelForge's AI assistant. We offer a range of services including websites (from ₹299), web apps (from ₹999), and mobile apps (from ₹1899). How can we assist with your project?",
+      
+      "Greetings! PixelForge delivers high-quality coding solutions under 100 minutes on demand. Our services include website development, app creation, and e-commerce solutions. What are you looking to build?"
+    ];
     
     // Detect project requirements
     if (lowerMsg.length > 15 && 
@@ -279,9 +338,9 @@ Be helpful, concise, and precise with information. Analyze user requirements and
       };
     }
     
-    // Generic fallback
+    // Use one of the random responses for general queries
     return {
-      text: "Thank you for your interest in PixelForge! I'd like to understand your project requirements better. Could you share more details about what you're looking to build, any specific features you need, and your timeline? This will help us provide the most accurate information and pricing.",
+      text: generalResponses[Math.floor(Math.random() * generalResponses.length)],
       confidence: 0.6
     };
   }
