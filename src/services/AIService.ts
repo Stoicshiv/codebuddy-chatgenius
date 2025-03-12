@@ -1,4 +1,3 @@
-
 import { toast } from "sonner";
 
 // Types for AI interaction
@@ -84,46 +83,45 @@ export class AIService {
     localStorage.removeItem("pixelforge_training_examples");
   }
 
-  // Generate system prompt from training examples
   private static generateSystemPrompt(): string {
     const examples = this.getTrainingExamples();
-    let systemPrompt = `You are PixelForge's AI assistant that helps potential clients understand our services.
+    let systemPrompt = `You are PixelForge's AI coding assistant that helps users with their development needs.
     
-Important information:
-- We deliver products under 100 minutes on demand (terms and conditions apply)
-- The customer must provide their requirements in a written format
-- We are not responsible for any incompatibility of the software with hardware
-- Contact number: +91 7600267733
+Main capabilities:
+- I help write clean, efficient code under 100 lines
+- I provide code examples and explanations
+- I assist with React, TypeScript, and Tailwind CSS
+- I focus on small, maintainable components
+- I can help debug and fix issues
+
+Guidelines:
+- Be concise and precise with code suggestions
+- Always consider best practices and TypeScript types
+- Suggest breaking down complex features into smaller tasks
+- Help users understand the code, not just write it
+- Focus on responsive design with Tailwind CSS
+
+Additional services:
+- Basic packages (simple components): ₹299
+- Intermediate (multi-component features): ₹999 
+- Advanced (complex integrations): ₹1899
+- Ultra (full applications): ₹2299
+
+Contact:
 - Email: shivrajsuman2005@gmail.com
-- Location: VIT Bhopal Kothri, Sehore, 466114 MP, India
-- We were founded in 2024 and our first client was Alankarika
+- Phone: +91 7600267733
+- Location: VIT Bhopal Kothri, Sehore, 466114 MP, India`;
 
-Pricing:
-- Basic packages: ₹299
-- Intermediate packages: ₹999
-- Advanced packages: ₹1899
-- Ultra packages: ₹2299
-
-Project types we handle:
-- Websites (basic, landing pages, portfolios, blogs)
-- Web applications (dashboards, platforms, tools)
-- E-commerce (online stores, payment systems)
-- Mobile applications (iOS, Android)
-
-Be helpful, concise, and precise with information. Analyze user requirements and provide relevant pricing estimates.`;
-
-    // Add training examples if available
     if (examples.length > 0) {
       systemPrompt += "\n\nTraining examples:\n";
-      examples.forEach((example, index) => {
-        systemPrompt += `Example ${index + 1}:\nUser: ${example.input}\nResponse: ${example.expectedOutput}\n\n`;
+      examples.forEach((example) => {
+        systemPrompt += `User: ${example.input}\nResponse: ${example.expectedOutput}\n\n`;
       });
     }
 
     return systemPrompt;
   }
 
-  // Get a response from the AI
   static async getResponse(userMessage: string): Promise<AIResponse> {
     if (!this.isReady()) {
       return {
@@ -133,18 +131,16 @@ Be helpful, concise, and precise with information. Analyze user requirements and
     }
 
     try {
-      // For demo/development without an actual API key, provide a fallback
       if (this.apiKey === "demo" || this.apiKey === "test") {
         return this.getFallbackResponse(userMessage);
       }
 
-      // Prepare conversation context with system prompt and user message
       const prompt = {
         inputs: `<s>[INST]<<SYS>>${this.generateSystemPrompt()}<</SYS>>\n\n${userMessage}[/INST]</s>`,
         parameters: {
           max_new_tokens: 500,
           temperature: 0.7,
-          return_full_text: false
+          return_full_text: false,
         }
       };
 
@@ -161,9 +157,8 @@ Be helpful, concise, and precise with information. Analyze user requirements and
         const errorData = await response.text();
         console.error("AI API Error:", errorData);
         
-        // If it's an authentication error, fall back to demo mode automatically
         if (response.status === 401) {
-          toast.error("Authentication failed. Using fallback responses.");
+          toast.error("Invalid API key. Using fallback responses.");
           return this.getFallbackResponse(userMessage);
         }
         
@@ -171,58 +166,43 @@ Be helpful, concise, and precise with information. Analyze user requirements and
       }
 
       const data = await response.json();
-      const generatedText = data[0]?.generated_text || "Sorry, I couldn't generate a response.";
+      const generatedText = data[0]?.generated_text || "I apologize, but I couldn't generate a response. Let me help you with coding instead.";
       
       return {
         text: generatedText,
-        confidence: 0.95, // Placeholder for actual confidence score
+        confidence: 0.95,
         metadata: this.analyzeResponse(generatedText, userMessage),
       };
     } catch (error) {
       console.error("Error getting AI response:", error);
-      toast.error("Failed to get AI response. Using fallback mode.");
-      
-      // Return a fallback response if API call fails
       return this.getFallbackResponse(userMessage);
     }
   }
 
-  // Analyze response to extract metadata (project type, complexity, etc.)
-  private static analyzeResponse(response: string, userMessage: string): any {
-    // Simple regex-based analysis to extract details from the response
-    const metadata: any = {};
-    
-    // Try to detect project type
-    const projectTypes = ["website", "web application", "e-commerce", "mobile app"];
-    for (const type of projectTypes) {
-      if (response.toLowerCase().includes(type)) {
-        metadata.projectType = type;
-        break;
-      }
-    }
-    
-    // Try to detect complexity
-    const complexityLevels = ["basic", "intermediate", "advanced", "ultra"];
-    for (const level of complexityLevels) {
-      if (response.toLowerCase().includes(level)) {
-        metadata.complexity = level;
-        break;
-      }
-    }
-    
-    // Try to extract price
-    const priceMatch = response.match(/₹\s*(\d+)/);
-    if (priceMatch) {
-      metadata.estimatedPrice = priceMatch[0];
-    }
-    
-    return metadata;
-  }
-
-  // Provide a fallback response when no API key is available or API fails
   private static getFallbackResponse(userMessage: string): AIResponse {
     const lowerMsg = userMessage.toLowerCase();
     
+    // Check for code-related keywords
+    if (lowerMsg.includes("code") || lowerMsg.includes("component") || lowerMsg.includes("function")) {
+      return {
+        text: "I can help you write clean, efficient code. Could you describe what functionality you need? I'll help create components under 100 lines following React and TypeScript best practices.",
+        confidence: 0.8,
+        metadata: {
+          detectedIntent: "code_assistance"
+        }
+      };
+    }
+
+    if (lowerMsg.includes("error") || lowerMsg.includes("bug") || lowerMsg.includes("fix")) {
+      return {
+        text: "I can help debug your code. Could you share the error message or describe the issue you're experiencing? I'll help identify and fix the problem while maintaining clean code practices.",
+        confidence: 0.8,
+        metadata: {
+          detectedIntent: "debugging"
+        }
+      };
+    }
+
     // Use any training examples if available
     const examples = this.getTrainingExamples();
     if (examples.length > 0) {
@@ -337,11 +317,52 @@ Be helpful, concise, and precise with information. Analyze user requirements and
         }
       };
     }
-    
-    // Use one of the random responses for general queries
+
+    const codingResponses = [
+      "I'm your AI coding assistant! I can help you create React components, implement features, or debug issues. What would you like to work on?",
+      "Ready to help with your coding needs! I specialize in React, TypeScript, and Tailwind CSS. What component or feature should we build?",
+      "Let's write some clean, efficient code together! I can help with components, hooks, or any React feature you need. What's your goal?",
+      "Hi! I'm here to assist with your development tasks. I can help create components under 100 lines or debug issues. What can I help you with?",
+    ];
+
     return {
-      text: generalResponses[Math.floor(Math.random() * generalResponses.length)],
-      confidence: 0.6
+      text: codingResponses[Math.floor(Math.random() * codingResponses.length)],
+      confidence: 0.7,
+      metadata: {
+        detectedIntent: "general_coding"
+      }
     };
+  }
+
+  // Analyze response to extract metadata (project type, complexity, etc.)
+  private static analyzeResponse(response: string, userMessage: string): any {
+    // Simple regex-based analysis to extract details from the response
+    const metadata: any = {};
+    
+    // Try to detect project type
+    const projectTypes = ["website", "web application", "e-commerce", "mobile app"];
+    for (const type of projectTypes) {
+      if (response.toLowerCase().includes(type)) {
+        metadata.projectType = type;
+        break;
+      }
+    }
+    
+    // Try to detect complexity
+    const complexityLevels = ["basic", "intermediate", "advanced", "ultra"];
+    for (const level of complexityLevels) {
+      if (response.toLowerCase().includes(level)) {
+        metadata.complexity = level;
+        break;
+      }
+    }
+    
+    // Try to extract price
+    const priceMatch = response.match(/₹\s*(\d+)/);
+    if (priceMatch) {
+      metadata.estimatedPrice = priceMatch[0];
+    }
+    
+    return metadata;
   }
 }
