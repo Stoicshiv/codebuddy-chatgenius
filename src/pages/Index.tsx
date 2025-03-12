@@ -26,14 +26,14 @@ const Index: React.FC = () => {
         />
         <meta
           name="keywords"
-          content="coding services, website development, app development, hire coders, programming assistance"
+          content="coding services, website development, app development, hire coders, programming assistance, 100 minute delivery"
         />
         {/* Open Graph / Social Media Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="PixelForge - Professional Website & App Development" />
         <meta
           property="og:description"
-          content="Expert coding services for websites, mobile apps, and software solutions."
+          content="Expert coding services for websites, mobile apps, and software solutions. Products delivered under 100 minutes on demand."
         />
         <meta property="og:url" content="https://pixelforge.com" />
         <meta property="og:site_name" content="PixelForge" />
@@ -42,7 +42,7 @@ const Index: React.FC = () => {
         <meta name="twitter:title" content="PixelForge - Professional Website & App Development" />
         <meta
           name="twitter:description"
-          content="Expert coding services for websites, mobile apps, and software solutions."
+          content="Expert coding services for websites, mobile apps, and software solutions. Products delivered under 100 minutes on demand."
         />
       </Helmet>
 

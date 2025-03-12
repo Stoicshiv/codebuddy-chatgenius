@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { MessageSquare, Send, X, ChevronDown, ChevronUp, Bot, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface Message {
   id: string;
@@ -19,6 +21,21 @@ const INITIAL_MESSAGES: Message[] = [
     timestamp: new Date(),
   },
 ];
+
+// Sample project requirements to analyze user input
+const PROJECT_TYPES = {
+  ecommerce: ["shop", "store", "commerce", "product", "sell", "payment", "cart"],
+  webapp: ["application", "dashboard", "platform", "system", "webapp", "tool"],
+  mobile: ["app", "mobile", "ios", "android", "phone", "tablet"],
+  website: ["site", "landing", "page", "blog", "portfolio"]
+};
+
+const COMPLEXITY_INDICATORS = {
+  basic: ["simple", "basic", "static", "landing page", "brochure"],
+  intermediate: ["dynamic", "interactive", "user accounts", "database", "content management"],
+  advanced: ["complex", "integration", "payment", "api", "analytics", "dashboard"],
+  ultra: ["enterprise", "scalable", "custom", "high volume", "security", "multi-language"]
+};
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,6 +82,89 @@ const ChatBot: React.FC = () => {
     setMessages((prev) => [...prev, newMessage]);
   };
 
+  // Analyze user's message to determine project type and complexity
+  const analyzeRequirements = (userMessage: string) => {
+    const lowerMsg = userMessage.toLowerCase();
+    
+    // Detect project type
+    let detectedType = "website"; // Default
+    let typeConfidence = 0;
+    
+    for (const [type, keywords] of Object.entries(PROJECT_TYPES)) {
+      const matchCount = keywords.filter(keyword => lowerMsg.includes(keyword)).length;
+      if (matchCount > typeConfidence) {
+        typeConfidence = matchCount;
+        detectedType = type;
+      }
+    }
+    
+    // Detect complexity
+    let detectedComplexity = "basic"; // Default
+    let complexityConfidence = 0;
+    
+    for (const [complexity, indicators] of Object.entries(COMPLEXITY_INDICATORS)) {
+      const matchCount = indicators.filter(indicator => lowerMsg.includes(indicator)).length;
+      if (matchCount > complexityConfidence) {
+        complexityConfidence = matchCount;
+        detectedComplexity = complexity;
+      }
+    }
+    
+    return { projectType: detectedType, complexity: detectedComplexity };
+  };
+
+  // Get pricing recommendation based on analysis
+  const getPricingRecommendation = (type: string, complexity: string) => {
+    const prices = {
+      basic: "₹299",
+      intermediate: "₹999",
+      advanced: "₹1899",
+      ultra: "₹2299"
+    };
+    
+    return {
+      price: prices[complexity as keyof typeof prices],
+      complexity,
+      projectType: type
+    };
+  };
+
+  const generateResponse = (userMessage: string) => {
+    // Check for specific queries first
+    if (userMessage.toLowerCase().includes("pricing") || userMessage.toLowerCase().includes("cost")) {
+      return "Our pricing varies based on project complexity. Basic packages start at ₹299, Intermediate at ₹999, Advanced at ₹1899, and Ultra at ₹2299. Would you like to schedule a consultation for a personalized quote?";
+    } 
+    
+    if (userMessage.toLowerCase().includes("contact") || userMessage.toLowerCase().includes("call") || userMessage.toLowerCase().includes("email")) {
+      return "You can reach our team at shivrajsuman2005@gmail.com or call us at +91 7600267733. Alternatively, you can fill out the contact form on our website and we'll get back to you within 24 hours.";
+    } 
+    
+    if (userMessage.toLowerCase().includes("time") || userMessage.toLowerCase().includes("deadline") || userMessage.toLowerCase().includes("how long")) {
+      return "We deliver products under 100 minutes on demand (terms and conditions apply). For larger projects, timelines depend on complexity and requirements. We'll provide a detailed timeline during our initial consultation.";
+    } 
+    
+    if (userMessage.toLowerCase().includes("location") || userMessage.toLowerCase().includes("address") || userMessage.toLowerCase().includes("where")) {
+      return "We're located at VIT Bhopal Kothri, Sehore, 466114 MP, India.";
+    }
+    
+    // For project requirement queries, analyze and provide customized response
+    if (userMessage.length > 15 && 
+        (userMessage.toLowerCase().includes("project") || 
+         userMessage.toLowerCase().includes("need") || 
+         userMessage.toLowerCase().includes("want") || 
+         userMessage.toLowerCase().includes("build") ||
+         userMessage.toLowerCase().includes("develop"))) {
+      
+      const { projectType, complexity } = analyzeRequirements(userMessage);
+      const recommendation = getPricingRecommendation(projectType, complexity);
+      
+      return `Based on your requirements, it sounds like you're looking for a ${complexity} ${projectType} solution. Our estimated pricing for this would be ${recommendation.price}. For projects of this nature, we typically deliver within 100 minutes for basic requirements (terms and conditions apply), or we can discuss a custom timeline for more complex features. Would you like to schedule a consultation to discuss your specific needs in detail?`;
+    }
+    
+    // Generic fallback
+    return "Thank you for your message. I'd like to understand your project requirements better. Could you share more details about what you're looking to build, any specific features you need, and your timeline? This will help us provide you with the most accurate information and pricing.";
+  };
+
   const simulateBotResponse = (userMessage: string) => {
     setIsTyping(true);
     
@@ -72,21 +172,7 @@ const ChatBot: React.FC = () => {
     const delay = Math.min(1000 + userMessage.length * 10, 3000);
     
     setTimeout(() => {
-      let response = "";
-      
-      // Very basic response logic - would be replaced with actual API call
-      if (userMessage.toLowerCase().includes("pricing") || userMessage.toLowerCase().includes("cost")) {
-        response = "Our pricing varies based on project complexity. Basic packages start at ₹299, Intermediate at ₹999, Advanced at ₹1899, and Ultra at ₹2299. Would you like to schedule a consultation for a personalized quote?";
-      } else if (userMessage.toLowerCase().includes("contact") || userMessage.toLowerCase().includes("call") || userMessage.toLowerCase().includes("email")) {
-        response = "You can reach our team at shivrajsuman2005@gmail.com or call us at +91 7600267733. Alternatively, you can fill out the contact form on our website and we'll get back to you within 24 hours.";
-      } else if (userMessage.toLowerCase().includes("time") || userMessage.toLowerCase().includes("deadline") || userMessage.toLowerCase().includes("how long")) {
-        response = "We deliver products under 100 minutes on demand (terms and conditions apply). For larger projects, timelines depend on complexity and requirements. We'll provide a detailed timeline during our initial consultation.";
-      } else if (userMessage.toLowerCase().includes("location") || userMessage.toLowerCase().includes("address") || userMessage.toLowerCase().includes("where")) {
-        response = "We're located at VIT Bhopal Kothri, Sehore, 466114 MP, India.";
-      } else {
-        response = "Thank you for your message. One of our coding experts will review your inquiry and get back to you shortly. If you'd like immediate assistance, please call us at +91 7600267733 or fill out the contact form for a consultation.";
-      }
-      
+      const response = generateResponse(userMessage);
       addMessage(response, true);
       setIsTyping(false);
     }, delay);
@@ -225,15 +311,15 @@ const ChatBot: React.FC = () => {
                 className="p-3 border-t border-gray-100"
               >
                 <div className="flex items-center">
-                  <input
+                  <Input
                     type="text"
                     value={inputText}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    placeholder="Type your message..."
+                    placeholder="Describe your project requirements..."
                     className="flex-1 p-2 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-primary"
                   />
-                  <button
+                  <Button
                     type="submit"
                     className={cn(
                       "bg-primary text-white p-2 rounded-r-lg",
@@ -246,7 +332,7 @@ const ChatBot: React.FC = () => {
                     aria-label="Send message"
                   >
                     <Send size={18} />
-                  </button>
+                  </Button>
                 </div>
               </form>
             </>
