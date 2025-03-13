@@ -13,6 +13,8 @@ import Pricing from "./pages/Pricing";
 import Careers from "./pages/Careers";
 import AITrainerPage from "./pages/admin/AITrainer";
 import NotFound from "./pages/NotFound";
+import ImmersiveBackground from "./components/3d/ImmersiveBackground";
+import ChatBot from "./components/ui/ChatBot";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ImmersiveBackground />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -35,6 +38,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      <ChatBot />
     </TooltipProvider>
   </QueryClientProvider>
 );

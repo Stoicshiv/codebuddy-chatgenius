@@ -148,6 +148,25 @@ export default {
 					'0%': { transform: 'translateZ(0) translateY(0)' },
 					'50%': { transform: 'translateZ(20px) translateY(-10px)' },
 					'100%': { transform: 'translateZ(0) translateY(0)' }
+				},
+				// Lusion-inspired animations
+				'morph': {
+					'0%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%' },
+					'50%': { borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%' },
+					'100%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%' }
+				},
+				'liquid-flow': {
+					'0%': { transform: 'translateY(-5%) translateX(-5%) rotate(-2deg)' },
+					'50%': { transform: 'translateY(5%) translateX(5%) rotate(2deg)' },
+					'100%': { transform: 'translateY(-5%) translateX(-5%) rotate(-2deg)' }
+				},
+				'magnetic-shift': {
+					'0%': { transform: 'translateX(0) translateY(0)' },
+					'20%': { transform: 'translateX(5px) translateY(-5px)' },
+					'40%': { transform: 'translateX(-5px) translateY(5px)' },
+					'60%': { transform: 'translateX(3px) translateY(3px)' },
+					'80%': { transform: 'translateX(-3px) translateY(-3px)' },
+					'100%': { transform: 'translateX(0) translateY(0)' }
 				}
 			},
 			animation: {
@@ -169,7 +188,11 @@ export default {
 				'rotate-in': 'rotate-in 0.7s ease-out',
 				'blur-in': 'blur-in 0.7s ease-out',
 				'glow-pulse': 'glow-pulse 3s infinite',
-				'3d-float': '3d-float 6s ease-in-out infinite'
+				'3d-float': '3d-float 6s ease-in-out infinite',
+				// Lusion-inspired animations
+				'morph': 'morph 8s ease-in-out infinite',
+				'liquid-flow': 'liquid-flow 10s ease-in-out infinite',
+				'magnetic-shift': 'magnetic-shift 8s ease-in-out infinite'
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
