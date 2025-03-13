@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AIService, Message } from "@/services/AIService";
 import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 const INITIAL_MESSAGES: Message[] = [
   {
