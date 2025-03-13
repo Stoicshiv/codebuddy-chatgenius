@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import Projects from "./pages/Projects";
@@ -13,17 +14,40 @@ import Pricing from "./pages/Pricing";
 import Careers from "./pages/Careers";
 import AITrainerPage from "./pages/admin/AITrainer";
 import NotFound from "./pages/NotFound";
-import ImmersiveBackground from "./components/3d/ImmersiveBackground";
-import ChatBot from "./components/ui/ChatBot";
+import { Skeleton } from "./components/ui/skeleton";
 
-const queryClient = new QueryClient();
+// Lazy load components that might be heavy
+const ImmersiveBackground = lazy(() => import("./components/3d/ImmersiveBackground"));
+const ChatBot = lazy(() => import("./components/ui/ChatBot"));
+
+// Create a new query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+// Fallback components
+const BackgroundFallback = () => (
+  <div className="fixed inset-0 -z-10 bg-gradient-to-b from-blue-900/20 via-indigo-900/20 to-purple-900/20" />
+);
+
+const ChatBotFallback = () => <div className="hidden"></div>;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <ImmersiveBackground />
+      
+      {/* Lazy load background with fallback */}
+      <Suspense fallback={<BackgroundFallback />}>
+        <ImmersiveBackground />
+      </Suspense>
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -38,7 +62,11 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      <ChatBot />
+      
+      {/* Lazy load chatbot with fallback */}
+      <Suspense fallback={<ChatBotFallback />}>
+        <ChatBot />
+      </Suspense>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -1,31 +1,40 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ImmersiveCardProps {
   children: React.ReactNode;
   className?: string;
+  intensity?: 'subtle' | 'medium' | 'strong';
 }
 
 const ImmersiveCard: React.FC<ImmersiveCardProps> = ({ 
   children,
-  className
+  className,
+  intensity = 'medium'
 }) => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   
   // Handle mouse movement for 3D effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isMobile) return;
     
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
+    // Scale rotation factor based on intensity
+    const intensityFactor = 
+      intensity === 'subtle' ? 5 :
+      intensity === 'strong' ? 15 : 10;
+    
     // Calculate rotation based on mouse position relative to card center
-    const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * 10;
-    const rotateX = -((e.clientY - centerY) / (rect.height / 2)) * 10;
+    const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * intensityFactor;
+    const rotateX = -((e.clientY - centerY) / (rect.height / 2)) * intensityFactor;
     
     setRotation({ x: rotateX, y: rotateY });
   };
@@ -35,6 +44,24 @@ const ImmersiveCard: React.FC<ImmersiveCardProps> = ({
     setIsHovered(false);
     setRotation({ x: 0, y: 0 });
   };
+  
+  // For mobile, don't add hover effects
+  if (isMobile) {
+    return (
+      <div
+        className={cn(
+          "relative overflow-hidden rounded-xl transition-all duration-300",
+          "bg-white/10 backdrop-blur-md border border-white/20",
+          "shadow-lg",
+          className
+        )}
+      >
+        <div className="relative p-6">
+          {children}
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div
