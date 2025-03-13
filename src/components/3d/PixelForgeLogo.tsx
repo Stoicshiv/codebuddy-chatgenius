@@ -7,19 +7,20 @@ import * as THREE from 'three';
 
 // Logo 3D model component
 const LogoModel = ({ scrollY }: { scrollY: number }) => {
-  const textRef = useRef<THREE.Mesh>(null);
+  // Change the ref type from Mesh to Group to match what we're attaching it to
+  const textGroupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
   
   // Animation based on scroll position
   useEffect(() => {
-    if (textRef.current) {
+    if (textGroupRef.current) {
       // Rotate based on scroll position
-      textRef.current.rotation.x = scrollY * 0.2;
-      textRef.current.rotation.y = scrollY * 0.5;
+      textGroupRef.current.rotation.x = scrollY * 0.2;
+      textGroupRef.current.rotation.y = scrollY * 0.5;
       
       // Scale based on scroll
       const scale = 1 + scrollY * 0.3;
-      textRef.current.scale.set(scale, scale, scale);
+      textGroupRef.current.scale.set(scale, scale, scale);
       
       // Move camera based on scroll
       camera.position.z = 5 - scrollY * 2;
@@ -28,8 +29,8 @@ const LogoModel = ({ scrollY }: { scrollY: number }) => {
   
   // Continuous subtle animation
   useFrame((state) => {
-    if (textRef.current) {
-      textRef.current.rotation.y += 0.003;
+    if (textGroupRef.current) {
+      textGroupRef.current.rotation.y += 0.003;
     }
   });
   
@@ -39,7 +40,7 @@ const LogoModel = ({ scrollY }: { scrollY: number }) => {
       rotationIntensity={0.5} // XYZ rotation intensity
       floatIntensity={0.5} // Up/down float intensity
     >
-      <group ref={textRef}>
+      <group ref={textGroupRef}>
         <Text3D
           font="/fonts/Inter_Bold.json" // You need to add this font
           size={0.8}
