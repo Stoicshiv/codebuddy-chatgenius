@@ -1,15 +1,23 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text3D, Float, PerspectiveCamera, useScroll } from '@react-three/drei';
+import { Text3D, Float, PerspectiveCamera } from '@react-three/drei';
 import { useIsMobile } from '@/hooks/use-mobile';
 import * as THREE from 'three';
+
+// Simplified fallback when 3D can't load
+const FallbackLogo = () => (
+  <div className="text-4xl font-bold text-gradient-future animate-pulse p-6">
+    PixelForge
+  </div>
+);
 
 // Logo 3D model component
 const LogoModel = ({ scrollY }: { scrollY: number }) => {
   // Change the ref type from Mesh to Group to match what we're attaching it to
   const textGroupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
+  const [fontError, setFontError] = useState(false);
   
   // Animation based on scroll position
   useEffect(() => {
@@ -34,6 +42,32 @@ const LogoModel = ({ scrollY }: { scrollY: number }) => {
     }
   });
   
+  // Handle potential font loading errors
+  useEffect(() => {
+    // Check if fonts/Inter_Bold.json actually exists
+    fetch('/fonts/Inter_Bold.json')
+      .then(response => {
+        if (!response.ok) {
+          console.error('Font file not found:', response.status);
+          setFontError(true);
+        }
+      })
+      .catch(error => {
+        console.error('Error loading font:', error);
+        setFontError(true);
+      });
+  }, []);
+
+  // If there's a font error, render a simple 3D text
+  if (fontError) {
+    return (
+      <mesh>
+        <boxGeometry args={[3, 1, 0.2]} />
+        <meshStandardMaterial color="#3b82f6" />
+      </mesh>
+    );
+  }
+  
   return (
     <Float
       speed={2} // Animation speed
@@ -42,7 +76,7 @@ const LogoModel = ({ scrollY }: { scrollY: number }) => {
     >
       <group ref={textGroupRef}>
         <Text3D
-          font="/fonts/Inter_Bold.json" // You need to add this font
+          font="/fonts/Inter_Bold.json"
           size={0.8}
           height={0.2}
           curveSegments={12}
@@ -65,6 +99,32 @@ const LogoModel = ({ scrollY }: { scrollY: number }) => {
     </Float>
   );
 };
+
+// Error boundary for catching 3D rendering errors
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode; fallback: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("3D Logo Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 interface PixelForgeLogoProps {
   className?: string;
@@ -119,20 +179,24 @@ const PixelForgeLogo: React.FC<PixelForgeLogoProps> = ({ className }) => {
       ref={containerRef}
       className={`relative ${className} h-60`}
     >
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        gl={{ 
-          antialias: true,
-          alpha: true,
-          powerPreference: 'high-performance',
-        }}
-      >
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <LogoModel scrollY={scrollY} />
-      </Canvas>
+      <ErrorBoundary fallback={<FallbackLogo />}>
+        <Suspense fallback={<FallbackLogo />}>
+          <Canvas
+            dpr={[1, 1.5]} // Reduced from [1, 2] for better performance
+            camera={{ position: [0, 0, 5], fov: 45 }}
+            gl={{ 
+              antialias: true,
+              alpha: true,
+              powerPreference: 'default', // Changed from high-performance to default
+            }}
+          >
+            <ambientLight intensity={0.5} />
+            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+            <pointLight position={[-10, -10, -10]} />
+            <LogoModel scrollY={scrollY} />
+          </Canvas>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };
