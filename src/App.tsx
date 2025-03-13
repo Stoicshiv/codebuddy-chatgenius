@@ -15,6 +15,7 @@ import Careers from "./pages/Careers";
 import AITrainerPage from "./pages/admin/AITrainer";
 import NotFound from "./pages/NotFound";
 import { Skeleton } from "./components/ui/skeleton";
+import CustomCursor from "./components/ui/CustomCursor";
 
 // Lazy load components that might be heavy
 const ImmersiveBackground = lazy(() => import("./components/3d/ImmersiveBackground"));
@@ -42,6 +43,9 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      
+      {/* Custom cursor - will only show on desktop */}
+      <CustomCursor />
       
       {/* Lazy load background with fallback */}
       <Suspense fallback={<BackgroundFallback />}>

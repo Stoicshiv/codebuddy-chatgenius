@@ -5,10 +5,14 @@ import { cn } from "@/lib/utils";
 import { ChevronRight, Code, ArrowRight } from "lucide-react";
 import CodeSnippet from "../shared/CodeSnippet";
 import AnimatedSection from "../shared/AnimatedSection";
+import PixelForgeLogo from "../3d/PixelForgeLogo";
+import InteractiveParticles from "../3d/InteractiveParticles";
+import useSoundEffects from "@/hooks/use-sound-effects";
 
 const Hero: React.FC = () => {
   const [currentWord, setCurrentWord] = useState(0);
   const words = ["Websites", "Mobile Apps", "Web Apps", "E-commerce", "SaaS"];
+  const { play } = useSoundEffects();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -17,22 +21,7 @@ const Hero: React.FC = () => {
     return () => clearInterval(interval);
   }, [words.length]);
 
-  const codeSnippet = `// Expert coding assistance
-import { CodeBuddy } from '@codebuddy/core';
-
-function TechSolution() {
-  // Define your project requirements
-  const requirements = {
-    type: 'website',
-    frameworks: ['react', 'node.js'],
-    features: ['responsive', 'secure', 'scalable']
-  };
-
-  // Let our experts build your solution
-  return CodeBuddy.createSolution(requirements);
-}
-
-// Result: A professionally crafted solution`;
+  const codeSnippet = `// ... keep existing code`;
 
   return (
     <section className="pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-hidden">
@@ -43,6 +32,9 @@ function TechSolution() {
               <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-6">
                 Professional Coding Services
               </div>
+              
+              {/* 3D PixelForge Logo */}
+              <PixelForgeLogo className="my-8" />
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 We Build Amazing{" "}
@@ -61,7 +53,9 @@ function TechSolution() {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link 
                   to="/contact"
-                  className="btn-hover-effect bg-primary text-white px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center"
+                  className="interactive btn-hover-effect bg-primary text-white px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center"
+                  onMouseEnter={() => play('hover')}
+                  onClick={() => play('click')}
                 >
                   Hire Our Coders
                   <ChevronRight className="ml-1 h-4 w-4" />
@@ -69,7 +63,9 @@ function TechSolution() {
                 
                 <Link 
                   to="/services"
-                  className="btn-hover-effect bg-secondary/10 text-secondary px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center"
+                  className="interactive btn-hover-effect bg-secondary/10 text-secondary px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center"
+                  onMouseEnter={() => play('hover')}
+                  onClick={() => play('click')}
                 >
                   Explore Services
                 </Link>
@@ -84,21 +80,26 @@ function TechSolution() {
 
           <AnimatedSection direction="right" className="relative">
             <div className="relative mx-auto max-w-lg lg:max-w-none">
+              {/* Add interactive particles as background */}
+              <div className="absolute inset-0 -z-10">
+                <InteractiveParticles className="w-full h-full" />
+              </div>
+              
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-blue-500/20 rounded-2xl blur-3xl opacity-30 transform -rotate-6 scale-95"></div>
               
-              <div className="relative bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
-                <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 border-b border-gray-200">
+              <div className="relative bg-white/10 backdrop-blur-md shadow-xl rounded-2xl overflow-hidden border border-white/20 card-futuristic">
+                <div className="flex items-center gap-2 bg-gray-900/50 px-4 py-2 border-b border-gray-800/50">
                   <div className="flex space-x-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
-                  <div className="text-xs font-mono bg-white/80 text-gray-600 px-2 py-1 rounded-md flex-1 text-center">
+                  <div className="text-xs font-mono bg-white/10 text-gray-300 px-2 py-1 rounded-md flex-1 text-center">
                     codebuddy-solution.tsx
                   </div>
                 </div>
                 
-                <CodeSnippet code={codeSnippet} animated={false} className="max-h-[350px] text-sm" />
+                <CodeSnippet code={codeSnippet} animated={true} className="max-h-[350px] text-sm" />
               </div>
             </div>
           </AnimatedSection>
