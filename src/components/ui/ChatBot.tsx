@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { MessageSquare, Send, X, ChevronDown, ChevronUp, Bot, User, Settings } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AIService, Message } from "@/services/AIService";
@@ -11,7 +10,7 @@ import { toast } from "sonner";
 const INITIAL_MESSAGES: Message[] = [
   {
     id: "welcome",
-    text: "Hi there! 👋 I'm PixelForge's assistant. How can I help you with your coding project today?",
+    text: "Hi there! 👋 I'm PixelForge's coding assistant. I can help you with React components, TypeScript, and Tailwind CSS. How can I help with your coding project today?",
     isBot: true,
     timestamp: new Date(),
   },
@@ -104,7 +103,19 @@ const ChatBot: React.FC = () => {
     try {
       // Get response from AI service
       const response = await AIService.getResponse(inputText);
-      addMessage(response.text, true);
+      
+      // Format code blocks in the response if present
+      let formattedText = response.text;
+      if (formattedText.includes("```")) {
+        // Ensure code blocks are properly displayed
+        formattedText = formattedText.replace(/```(\w*)([\s\S]*?)```/g, (match, language, code) => {
+          return `<div class="bg-gray-800 rounded-md p-2 my-2 overflow-x-auto text-xs">
+                    <pre><code class="language-${language || 'javascript'}">${code.trim()}</code></pre>
+                  </div>`;
+        });
+      }
+      
+      addMessage(formattedText, true);
     } catch (error) {
       console.error("Error getting AI response:", error);
       addMessage("I'm sorry, I encountered an error. Please try again later.", true);
@@ -123,7 +134,7 @@ const ChatBot: React.FC = () => {
 
   const handleUseDemo = () => {
     AIService.init("demo");
-    toast.success("Using demo mode for AI. No real API calls will be made.");
+    toast.success("Using demo mode for AI. Responses will be based on pre-trained examples.");
     setShowApiKeyPrompt(false);
     localStorage.setItem("has_seen_ai_prompt", "true");
   };
@@ -133,9 +144,9 @@ const ChatBot: React.FC = () => {
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6 shadow-xl">
-          <h3 className="text-lg font-medium mb-2">Setup AI Assistant</h3>
+          <h3 className="text-lg font-medium mb-2">Setup AI Coding Assistant</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-            To enable the AI chat assistant, please enter your Hugging Face API key below. 
+            To enable the AI coding assistant, please enter your Hugging Face API key below. 
             Your key is stored locally in your browser and never sent to our servers.
           </p>
           <div className="space-y-4">
@@ -189,7 +200,7 @@ const ChatBot: React.FC = () => {
           "bg-primary text-white hover:bg-primary/90",
           "transform hover:scale-105 active:scale-95"
         )}
-        aria-label="Chat with us"
+        aria-label="Code Assistant"
       >
         <MessageSquare size={22} />
       </button>
@@ -211,7 +222,7 @@ const ChatBot: React.FC = () => {
           >
             <div className="flex items-center space-x-2">
               <Bot className="text-primary" size={20} />
-              <h3 className="font-medium">PixelForge Assistant</h3>
+              <h3 className="font-medium">Code Assistant</h3>
             </div>
             <div className="flex items-center space-x-2">
               <a 
@@ -260,7 +271,11 @@ const ChatBot: React.FC = () => {
                           : "bg-primary text-white"
                       )}
                     >
-                      <p className="text-sm">{msg.text}</p>
+                      {msg.isBot && msg.text.includes("<div class=") ? (
+                        <div dangerouslySetInnerHTML={{ __html: msg.text }} />
+                      ) : (
+                        <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
+                      )}
                     </div>
                     <div
                       className={cn(
@@ -309,7 +324,7 @@ const ChatBot: React.FC = () => {
                     value={inputText}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    placeholder="Describe your project requirements..."
+                    placeholder="Ask about React, TypeScript, UI components..."
                     className="flex-1 p-2 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                   <Button
