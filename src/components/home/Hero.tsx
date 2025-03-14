@@ -1,12 +1,13 @@
+
 import React, { useState, useEffect, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Code, ArrowRight } from "lucide-react";
 import CodeSnippet from "../shared/CodeSnippet";
 import AnimatedSection from "../shared/AnimatedSection";
-import PixelForgeLogo from "../3d/PixelForgeLogo";
 import InteractiveParticles from "../3d/InteractiveParticles";
 import useSoundEffects from "@/hooks/use-sound-effects";
+import FluidAnimation from "../animations/FluidAnimation";
 
 // Fallback component for 3D elements
 const FallbackComponent = () => (
@@ -72,8 +73,8 @@ const Hero: React.FC = () => {
                 Professional Coding Services
               </div>
               
-              {/* 3D PixelForge Logo */}
-              <PixelForgeLogo className="my-8" />
+              {/* Fluid Animation */}
+              <FluidAnimation className="my-8" />
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 We Build Amazing{" "}
@@ -146,8 +147,7 @@ const Hero: React.FC = () => {
       </div>
     </section>
   );
-};
-`;
+};`;
 
   return (
     <section className="pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-hidden">
@@ -159,9 +159,12 @@ const Hero: React.FC = () => {
                 Professional Coding Services
               </div>
               
-              {/* 3D PixelForge Logo with fallback */}
-              <div className="my-8 min-h-[150px]">
-                <PixelForgeLogo className="" />
+              {/* Interactive fluid animation instead of 3D logo */}
+              <div className="h-[150px] w-full relative my-8 rounded-xl overflow-hidden border border-white/10">
+                <FluidAnimation />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <h2 className="text-5xl font-bold text-white text-gradient-future">PixelForge</h2>
+                </div>
               </div>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
