@@ -1,108 +1,187 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnimatedSection from "@/components/shared/AnimatedSection";
-import GlobeScene from "@/components/3d/GlobeScene";
+import PageBackground from "@/components/animations/PageBackground";
 
 const About: React.FC = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [1, 0.8, 0.6, 0.4]);
 
   return (
     <>
       <Helmet>
-        <title>About PixelForge - Our Mission and Team</title>
+        <title>About Us | PixelForge - Our Story & Team</title>
         <meta
           name="description"
-          content="Learn about PixelForge's mission, values, and the team of expert developers behind our coding services."
+          content="Learn about PixelForge's journey, values, and the talented team behind our innovative development solutions."
         />
       </Helmet>
 
-      <div className="flex flex-col min-h-screen">
+      {/* Dynamic background */}
+      <PageBackground 
+        type="immersive-particles" 
+        colorScheme="green"
+        intensity="normal"
+      />
+
+      <div className="flex flex-col min-h-screen" ref={containerRef}>
         <Navbar />
+        
         <main className="flex-grow pt-24">
-          {/* Hero Section */}
-          <section className="relative py-16 md:py-24 overflow-hidden">
+          {/* Hero Section with Parallax */}
+          <section className="py-16 md:py-24 relative overflow-hidden">
+            <motion.div
+              className="absolute inset-0 z-[-1]"
+              style={{ opacity }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60" />
+            </motion.div>
+            
+            <div className="container-custom relative z-10">
+              <AnimatedSection className="text-center max-w-3xl mx-auto">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gradient-future">
+                  Our Story
+                </h1>
+                <p className="text-lg text-white/80 mb-8">
+                  We're a team of passionate developers, designers, and digital strategists dedicated to creating exceptional digital experiences that drive real results.
+                </p>
+              </AnimatedSection>
+            </div>
+          </section>
+
+          {/* Timeline Section */}
+          <section className="py-16 md:py-24 relative">
             <div className="container-custom">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <AnimatedSection direction="left">
-                  <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-                    Our Story
-                  </div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                    We Build Digital Solutions That Drive Success
-                  </h1>
-                  <p className="text-lg text-muted-foreground mb-8">
-                    PixelForge was founded in 2024 with a simple mission: to make quality coding and development services accessible to businesses of all sizes. Our team of expert developers, designers, and consultants work together to transform your ideas into powerful digital solutions.
-                  </p>
-                  <p className="text-lg text-muted-foreground mb-4">
-                    <strong>Fast Delivery:</strong> We deliver products under 100 mins on demand. Terms and conditions apply:
-                  </p>
-                  <ul className="list-disc pl-6 text-muted-foreground mb-8">
-                    <li>Project must have minimal content requirements</li>
-                    <li>Customer must provide detailed requirements in written format</li>
-                    <li>We are not responsible for any incompatibility between software and hardware</li>
-                  </ul>
-                </AnimatedSection>
+              <AnimatedSection className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Journey</h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  From humble beginnings to industry leadership, discover how we've grown and evolved over the years.
+                </p>
+              </AnimatedSection>
+              
+              {/* Timeline */}
+              <div className="relative max-w-4xl mx-auto">
+                {/* Timeline line */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20"></div>
                 
-                <AnimatedSection direction="right" className="h-[400px]">
-                  <GlobeScene className="w-full h-full" />
-                </AnimatedSection>
+                {[
+                  {
+                    year: "2015",
+                    title: "The Beginning",
+                    description: "PixelForge was founded by a small team of developers with a shared vision: to create digital solutions that combine technical excellence with beautiful design."
+                  },
+                  {
+                    year: "2017",
+                    title: "Growth & Expansion",
+                    description: "We expanded our team and capabilities, adding specialized expertise in mobile development, UX design, and e-commerce solutions."
+                  },
+                  {
+                    year: "2019",
+                    title: "International Reach",
+                    description: "PixelForge began working with clients across Europe and North America, bringing our innovative approach to businesses around the world."
+                  },
+                  {
+                    year: "2021",
+                    title: "Industry Recognition",
+                    description: "Our work received multiple industry awards for excellence in design, development, and digital innovation."
+                  },
+                  {
+                    year: "Today",
+                    title: "Continued Innovation",
+                    description: "We continue to push boundaries and explore new technologies, always focused on delivering exceptional results for our clients."
+                  }
+                ].map((milestone, index) => (
+                  <AnimatedSection
+                    key={milestone.year}
+                    className="relative mb-16 last:mb-0"
+                    delay={index * 150}
+                    direction={index % 2 === 0 ? "left" : "right"}
+                  >
+                    <div className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center`}>
+                      {/* Year marker */}
+                      <div className="w-1/2 px-4 text-center">
+                        <div className="inline-block bg-gradient-to-r from-primary to-indigo-600 text-white px-6 py-3 rounded-full font-bold">
+                          {milestone.year}
+                        </div>
+                      </div>
+                      
+                      {/* Timeline node */}
+                      <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary"></div>
+                      
+                      {/* Content */}
+                      <div className="w-1/2 px-4">
+                        <div className="p-6 glass-card rounded-xl">
+                          <h3 className="text-xl font-bold mb-2">{milestone.title}</h3>
+                          <p className="text-muted-foreground">{milestone.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </AnimatedSection>
+                ))}
               </div>
             </div>
           </section>
 
           {/* Values Section */}
-          <section className="py-16 bg-muted/30">
+          <section className="py-16 md:py-24 bg-muted/30">
             <div className="container-custom">
-              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-                  Our Values
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  The Principles That Guide Our Work
-                </h2>
-                <p className="text-muted-foreground text-lg">
-                  At PixelForge, we believe in creating meaningful digital experiences driven by these core values.
+              <AnimatedSection className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Values</h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  These core principles guide everything we do, from how we approach projects to how we build our team.
                 </p>
               </AnimatedSection>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
                   {
+                    icon: "🌟",
                     title: "Excellence",
-                    description: "We strive for excellence in every line of code we write, every design we create, and every solution we deliver."
+                    description: "We're committed to delivering the highest quality in everything we do, constantly pushing ourselves to exceed expectations."
                   },
                   {
-                    title: "Innovation",
-                    description: "We embrace new technologies and approaches to solve complex problems and create cutting-edge solutions."
-                  },
-                  {
+                    icon: "🤝",
                     title: "Collaboration",
-                    description: "We work closely with our clients to understand their needs and involve them throughout the development process."
+                    description: "We believe the best results come from working closely with our clients and each other, combining our diverse perspectives and expertise."
                   },
                   {
-                    title: "Integrity",
-                    description: "We maintain the highest standards of professional integrity in all our business relationships."
+                    icon: "💡",
+                    title: "Innovation",
+                    description: "We embrace new technologies and approaches, constantly exploring better ways to solve problems and create exceptional experiences."
                   },
                   {
-                    title: "Continuous Learning",
-                    description: "We constantly update our skills and knowledge to stay at the forefront of our industry."
+                    icon: "🔍",
+                    title: "Attention to Detail",
+                    description: "We know that the small details make a big difference, so we pay careful attention to every aspect of our work."
                   },
                   {
-                    title: "User-Centric",
-                    description: "We focus on creating exceptional user experiences that drive engagement and satisfaction."
+                    icon: "🌱",
+                    title: "Continuous Growth",
+                    description: "We're dedicated to learning and improving, both as individuals and as an organization, to stay at the forefront of our industry."
+                  },
+                  {
+                    icon: "💙",
+                    title: "User-Centered",
+                    description: "We put users at the heart of everything we build, creating solutions that are intuitive, accessible, and genuinely useful."
                   }
                 ].map((value, index) => (
                   <AnimatedSection
                     key={value.title}
-                    className="card-hover glass rounded-xl p-6 flex flex-col h-full"
+                    className="card-futuristic h-full"
                     delay={index * 100}
                     direction="up"
                   >
+                    <div className="text-4xl mb-4">{value.icon}</div>
                     <h3 className="text-xl font-bold mb-3">{value.title}</h3>
                     <p className="text-muted-foreground">{value.description}</p>
                   </AnimatedSection>
@@ -111,159 +190,98 @@ const About: React.FC = () => {
             </div>
           </section>
 
-          {/* Timeline Section */}
-          <section className="py-16">
-            <div className="container-custom">
-              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-                  Our Journey
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  The PixelForge Story
-                </h2>
-                <p className="text-muted-foreground text-lg">
-                  From a small startup to a leading development firm, our journey has been defined by growth and excellence.
-                </p>
-              </AnimatedSection>
-
-              <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
-                {[
-                  {
-                    year: "2024 Jan",
-                    title: "Foundation",
-                    description: "PixelForge was founded with a team of passionate developers led by Shivraj Suman."
-                  },
-                  {
-                    year: "2024 Feb",
-                    title: "First Major Client",
-                    description: "Secured our first client, Alankarika, and delivered our first successful project."
-                  },
-                  {
-                    year: "2024 Mar",
-                    title: "Service Expansion",
-                    description: "Expanded our service offerings to include mobile app development and UI/UX design."
-                  },
-                  {
-                    year: "2024 Apr",
-                    title: "Team Growth",
-                    description: "Added new team members to enhance our development capabilities."
-                  },
-                  {
-                    year: "2024 May",
-                    title: "Innovation Focus",
-                    description: "Launched rapid development methodology to deliver projects under 100 minutes on demand."
-                  },
-                  {
-                    year: "2024 Present",
-                    title: "Present Day",
-                    description: "Now a growing team serving clients with cutting-edge solutions and rapid development."
-                  },
-                ].map((event, index) => (
-                  <AnimatedSection
-                    key={event.year}
-                    className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group"
-                    delay={index * 100}
-                  >
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                      {index + 1}
-                    </div>
-                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] card-hover glass rounded-xl p-4 md:p-6">
-                      <h3 className="text-xl font-bold mb-1">{event.title}</h3>
-                      <time className="text-sm text-primary font-semibold mb-2 block">{event.year}</time>
-                      <p className="text-muted-foreground">{event.description}</p>
-                    </div>
-                  </AnimatedSection>
-                ))}
-              </div>
-            </div>
-          </section>
-
           {/* Team Section */}
-          <section className="py-16 bg-muted/30">
+          <section className="py-16 md:py-24">
             <div className="container-custom">
-              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-                  Our Team
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  Meet the Experts Behind PixelForge
-                </h2>
-                <p className="text-muted-foreground text-lg">
-                  Our talented team of developers and designers is dedicated to creating exceptional digital experiences.
+              <AnimatedSection className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Meet Our Team</h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  The talented individuals who bring creativity, expertise, and passion to every project.
                 </p>
               </AnimatedSection>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {[
                   {
-                    name: "Shivraj Suman",
-                    role: "Founder",
-                    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                    bio: "Tech enthusiast with a passion for creating innovative solutions that solve real-world problems."
+                    name: "Alex Johnson",
+                    role: "Founder & Lead Developer",
+                    image: "/placeholder.svg",
+                    description: "With over 15 years of experience, Alex leads our development strategy and technical vision."
                   },
                   {
-                    name: "Shaurya Pethe",
-                    role: "Co-founder",
-                    image: "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
-                    bio: "Creative developer with expertise in front-end technologies and user experience design."
+                    name: "Sophia Chen",
+                    role: "UX Design Director",
+                    image: "/placeholder.svg",
+                    description: "Sophia crafts intuitive, engaging user experiences that balance beauty and functionality."
                   },
                   {
-                    name: "Nikhil Hegde",
-                    role: "Lead Programmer",
-                    image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80",
-                    bio: "Back-end specialist with a focus on building scalable, efficient systems and databases."
+                    name: "Marcus Williams",
+                    role: "Mobile Development Lead",
+                    image: "/placeholder.svg",
+                    description: "Marcus specializes in creating seamless, high-performance mobile applications across platforms."
                   },
                   {
-                    name: "Harshit Maurya",
-                    role: "Lead Programmer",
-                    image: "https://images.unsplash.com/photo-1584999734482-0361aecad844?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80",
-                    bio: "Full-stack developer with expertise in mobile app development and cloud solutions."
+                    name: "Olivia Martinez",
+                    role: "Project Manager",
+                    image: "/placeholder.svg",
+                    description: "Olivia ensures our projects run smoothly, on time, and with clear communication throughout."
+                  },
+                  {
+                    name: "David Kim",
+                    role: "Frontend Developer",
+                    image: "/placeholder.svg",
+                    description: "David brings designs to life with clean, efficient code and attention to interactive details."
+                  },
+                  {
+                    name: "Priya Patel",
+                    role: "Backend Developer",
+                    image: "/placeholder.svg",
+                    description: "Priya builds robust, scalable systems that power our applications with reliability and speed."
+                  },
+                  {
+                    name: "James Wilson",
+                    role: "DevOps Engineer",
+                    image: "/placeholder.svg",
+                    description: "James manages our infrastructure and deployment processes for optimal performance and security."
+                  },
+                  {
+                    name: "Zoe Thompson",
+                    role: "UI Designer",
+                    image: "/placeholder.svg",
+                    description: "Zoe creates visually stunning interfaces that capture each client's unique brand identity."
                   }
                 ].map((member, index) => (
                   <AnimatedSection
                     key={member.name}
-                    className="card-hover glass rounded-xl overflow-hidden text-center"
-                    delay={index * 100}
+                    className="group"
+                    delay={index * 50}
                     direction="up"
                   >
-                    <div className="relative overflow-hidden h-64">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                      <p className="text-primary font-medium mb-3">{member.role}</p>
-                      <p className="text-muted-foreground text-sm">{member.bio}</p>
+                    <div className="rounded-xl overflow-hidden h-full glass-card transition-all duration-500 group-hover:translate-y-[-8px] group-hover:shadow-xl">
+                      {/* Team Member Image */}
+                      <div className="h-48 overflow-hidden relative">
+                        <div className="absolute inset-0 bg-gradient-to-b from-green-500/30 to-blue-600/30 opacity-0 group-hover:opacity-70 transition-opacity z-10" />
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+                      
+                      {/* Team Member Details */}
+                      <div className="p-4 text-center">
+                        <h3 className="text-xl font-bold mb-1">{member.name}</h3>
+                        <div className="text-primary text-sm font-medium mb-3">{member.role}</div>
+                        <p className="text-muted-foreground text-sm">{member.description}</p>
+                      </div>
                     </div>
                   </AnimatedSection>
                 ))}
               </div>
             </div>
           </section>
-
-          {/* Location Section */}
-          <section className="py-16">
-            <div className="container-custom">
-              <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-                  Our Location
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  Where to Find Us
-                </h2>
-                <p className="text-muted-foreground text-lg mb-6">
-                  We're headquartered at VIT Bhopal Kothri, Sehore, 466114 MP, with a team that collaborates both in-person and remotely.
-                </p>
-                <p className="text-lg font-medium">
-                  Contact: <a href="mailto:shivrajsuman2005@gmail.com" className="text-primary">shivrajsuman2005@gmail.com</a> | <a href="tel:+917600267733" className="text-primary">+91 7600267733</a>
-                </p>
-              </AnimatedSection>
-            </div>
-          </section>
         </main>
+        
         <Footer />
       </div>
     </>

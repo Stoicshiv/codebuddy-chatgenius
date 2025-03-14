@@ -161,7 +161,12 @@ const Hero: React.FC = () => {
               
               {/* Interactive fluid animation instead of 3D logo */}
               <div className="h-[150px] w-full relative my-8 rounded-xl overflow-hidden border border-white/10">
-                <FluidAnimation />
+                <FluidAnimation 
+                  colorPalette="rainbow" 
+                  intensity="intense" 
+                  speed="normal" 
+                  particleDensity="high"
+                />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <h2 className="text-5xl font-bold text-white text-gradient-future">PixelForge</h2>
                 </div>
