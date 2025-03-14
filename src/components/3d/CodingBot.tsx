@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Float, PerspectiveCamera } from '@react-three/drei';
 import { useIsMobile } from '@/hooks/use-mobile';
+import * as THREE from 'three';
 
 // Fallback component when 3D can't load
 const FallbackBot = () => (
@@ -22,7 +23,7 @@ const BotModel = ({ scrollY }: { scrollY: number }) => {
   
   // Use a free 3D model of a robot
   const { scene } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/robot-playground/model.gltf', undefined, 
-    () => {},
+    false, // Changed from () => {} to false (onProgress parameter)
     (error) => {
       console.error('Error loading robot model:', error);
       setModelError(true);
