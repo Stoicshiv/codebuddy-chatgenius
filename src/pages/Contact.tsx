@@ -152,12 +152,12 @@ const ContactPage: React.FC = () => {
                       Send us an email and we'll get back to you within 24 hours.
                     </p>
                     <a 
-                      href="mailto:info@pixelforge.dev" 
+                      href="mailto:info@pixelforge.com" 
                       className="text-primary hover:underline interactive"
                       onMouseEnter={() => play('hover')}
                       onClick={() => play('click')}
                     >
-                      info@pixelforge.dev
+                      info@pixelforge.com
                     </a>
                   </motion.div>
                 </ImmersiveCard>
@@ -178,12 +178,12 @@ const ContactPage: React.FC = () => {
                       Prefer a direct conversation? Give us a call.
                     </p>
                     <a 
-                      href="tel:+919876543210" 
+                      href="tel:+11234567890" 
                       className="text-primary hover:underline interactive"
                       onMouseEnter={() => play('hover')}
                       onClick={() => play('click')}
                     >
-                      +91 98765 43210
+                      +1 (123) 456-7890
                     </a>
                   </motion.div>
                 </ImmersiveCard>
@@ -205,8 +205,8 @@ const ContactPage: React.FC = () => {
                       Come by our office for an in-person meeting.
                     </p>
                     <address className="not-italic text-primary interactive">
-                      VIT Bhopal, Kothri Kalan<br />
-                      Sehore, MP 466114
+                      123 Tech Lane, Digital City<br />
+                      California, 90210
                     </address>
                   </motion.div>
                 </ImmersiveCard>

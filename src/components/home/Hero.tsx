@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Code, ArrowRight } from "lucide-react";
 import CodeSnippet from "../shared/CodeSnippet";
 import AnimatedSection from "../shared/AnimatedSection";
-import CodingBot from "../3d/CodingBot";
+import PixelForgeLogo from "../3d/PixelForgeLogo";
 import InteractiveParticles from "../3d/InteractiveParticles";
 import useSoundEffects from "@/hooks/use-sound-effects";
 
@@ -73,8 +72,8 @@ const Hero: React.FC = () => {
                 Professional Coding Services
               </div>
               
-              {/* 3D CodingBot */}
-              <CodingBot className="my-8" />
+              {/* 3D PixelForge Logo */}
+              <PixelForgeLogo className="my-8" />
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 We Build Amazing{" "}
@@ -160,9 +159,9 @@ const Hero: React.FC = () => {
                 Professional Coding Services
               </div>
               
-              {/* 3D CodingBot with fallback */}
+              {/* 3D PixelForge Logo with fallback */}
               <div className="my-8 min-h-[150px]">
-                <CodingBot className="" />
+                <PixelForgeLogo className="" />
               </div>
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">

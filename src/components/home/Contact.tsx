@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
@@ -58,20 +59,20 @@ const Contact: React.FC = () => {
     {
       icon: <Mail className="w-5 h-5 text-primary" />,
       title: "Email Us",
-      content: "info@pixelforge.dev",
-      link: "mailto:info@pixelforge.dev",
+      content: "shivrajsuman2005@gmail.com",
+      link: "mailto:shivrajsuman2005@gmail.com",
     },
     {
       icon: <Phone className="w-5 h-5 text-primary" />,
       title: "Call Us",
-      content: "+91 98765 43210",
-      link: "tel:+919876543210",
+      content: "+1 (234) 567-890",
+      link: "tel:+1234567890",
     },
     {
       icon: <MapPin className="w-5 h-5 text-primary" />,
       title: "Visit Us",
-      content: "VIT Bhopal, Kothri Kalan, Sehore, MP 466114",
-      link: "https://goo.gl/maps/njYTXqXLUmrDbvK18",
+      content: "VIT Bhopal Kothri, Sehore, 466114 MP",
+      link: "https://maps.google.com",
     },
   ];
 
@@ -141,7 +142,7 @@ const Contact: React.FC = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
-                      placeholder="+91 98765 43210"
+                      placeholder="+1 (234) 567-890"
                     />
                   </div>
                   <div>
@@ -245,7 +246,7 @@ const Contact: React.FC = () => {
               
               <div className="rounded-xl overflow-hidden shadow-lg h-64 lg:h-auto mt-8 lg:mt-0">
                 <iframe
-                  title="PixelForge Office Location"
+                  title="WeCode Office Location"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3669.1597300126984!2d77.05631607518652!3d23.12743991472215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3764d05a4b7ce871%3A0xb57d51de54db68bd!2sVIT%20Bhopal!5e0!3m2!1sen!2sin!4v1718023271209!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
