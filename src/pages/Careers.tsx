@@ -5,12 +5,21 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import ApplicationForm from "@/components/careers/ApplicationForm";
+import PageBackground from "@/components/animations/PageBackground";
 
 const Careers: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
+  const [backgroundLoaded, setBackgroundLoaded] = useState(false);
   
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Delay background animation to ensure smooth page transition
+    const timer = setTimeout(() => {
+      setBackgroundLoaded(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const toggleForm = () => {
@@ -32,43 +41,54 @@ const Careers: React.FC = () => {
         />
       </Helmet>
 
+      {/* Enhanced background with deep blue particles */}
+      {backgroundLoaded && (
+        <PageBackground 
+          type="fluid" 
+          colorScheme="blue" 
+          intensity="subtle" 
+          blueVariant="deep"
+          fadeIn={true}
+        />
+      )}
+
       <div className="flex flex-col min-h-screen">
         <Navbar />
-        <main className="flex-grow pt-24">
+        <main className="flex-grow pt-24 relative z-10">
           {/* Hero Section */}
           <section className="py-16 md:py-24">
             <div className="container-custom">
               <AnimatedSection className="text-center max-w-3xl mx-auto mb-10">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gradient-future">
                   Join Our Team
                 </h1>
-                <p className="text-lg text-muted-foreground mb-8">
+                <p className="text-lg text-muted-foreground mb-8 glass-futuristic backdrop-blur-sm p-6 rounded-xl">
                   At PixelForge, we're always looking for talented individuals who are passionate about creating exceptional digital experiences. Join us and be part of building the future.
                 </p>
                 <button
                   onClick={toggleForm}
-                  className="btn-hover-effect bg-primary text-white px-6 py-3 rounded-lg font-medium"
+                  className="btn-futuristic"
                 >
                   {showForm ? "Hide Application Form" : "Apply Now"}
                 </button>
               </AnimatedSection>
 
               {showForm && (
-                <div id="application-form" className="mt-8">
+                <div id="application-form" className="mt-8 animate-fade-in">
                   <ApplicationForm />
                 </div>
               )}
             </div>
           </section>
 
-          {/* Benefits Section */}
-          <section className="py-16 bg-muted/30">
+          {/* Benefits Section with enhanced appearance */}
+          <section className="py-16 bg-muted/20 backdrop-blur-md">
             <div className="container-custom">
               <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4 neon-border animate-pulse-slow">
                   Developer Perks
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gradient-future">
                   Why Work With Us
                 </h2>
                 <p className="text-muted-foreground text-lg">
@@ -117,12 +137,12 @@ const Careers: React.FC = () => {
                 ].map((benefit, index) => (
                   <AnimatedSection
                     key={benefit.title}
-                    className="card-hover glass rounded-xl p-6 flex flex-col h-full"
+                    className="card-futuristic border border-white/10 shadow-lg hover:shadow-blue-500/20 transition-all duration-500"
                     delay={index * 50}
                     direction="up"
                   >
-                    <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
-                    <p className="text-muted-foreground">{benefit.description}</p>
+                    <h3 className="text-xl font-bold mb-3 text-white">{benefit.title}</h3>
+                    <p className="text-white/80">{benefit.description}</p>
                   </AnimatedSection>
                 ))}
               </div>

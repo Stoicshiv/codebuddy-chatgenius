@@ -13,6 +13,7 @@ interface PageBackgroundProps {
   intensity?: 'subtle' | 'normal' | 'intense';
   className?: string;
   fadeIn?: boolean;
+  blueVariant?: 'deep' | 'bright' | 'cyan' | 'standard';
 }
 
 const PageBackground: React.FC<PageBackgroundProps> = ({
@@ -21,6 +22,7 @@ const PageBackground: React.FC<PageBackgroundProps> = ({
   intensity = 'normal',
   className,
   fadeIn = true,
+  blueVariant = 'standard',
 }) => {
   // Map colorScheme to ImmersiveAnimation format
   const getImmersiveColorScheme = (): 'blue' | 'purple' | 'rainbow' | 'green' => {
@@ -62,6 +64,7 @@ const PageBackground: React.FC<PageBackgroundProps> = ({
         colorPalette={colorScheme}
         intensity={intensity}
         particleDensity={intensity === 'subtle' ? 'low' : intensity === 'intense' ? 'high' : 'medium'}
+        blueVariant={blueVariant}
       />
     );
   }

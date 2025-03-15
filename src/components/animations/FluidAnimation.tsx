@@ -9,6 +9,7 @@ interface FluidAnimationProps {
   speed?: 'slow' | 'normal' | 'fast';
   particleDensity?: 'low' | 'medium' | 'high';
   interactiveRadius?: number;
+  blueVariant?: 'deep' | 'bright' | 'cyan' | 'standard';
 }
 
 const FluidAnimation: React.FC<FluidAnimationProps> = ({ 
@@ -17,7 +18,8 @@ const FluidAnimation: React.FC<FluidAnimationProps> = ({
   intensity = 'normal',
   speed = 'normal',
   particleDensity = 'medium',
-  interactiveRadius = 200
+  interactiveRadius = 200,
+  blueVariant = 'standard'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
@@ -42,7 +44,7 @@ const FluidAnimation: React.FC<FluidAnimationProps> = ({
       pointerRef.current.y = e.clientY;
     };
 
-    // Colors based on the selected palette
+    // Colors based on the selected palette and variant
     const getColorPalette = () => {
       switch (colorPalette) {
         case 'purple':
@@ -57,6 +59,18 @@ const FluidAnimation: React.FC<FluidAnimationProps> = ({
             return `hsla(${hue}, 80%, 60%, ${opacity})`;
           };
         case 'blue':
+          // Enhanced blue variants
+          switch(blueVariant) {
+            case 'deep':
+              return (opacity: number) => `rgba(28, 63, 170, ${opacity})`;
+            case 'bright':
+              return (opacity: number) => `rgba(33, 150, 243, ${opacity})`;
+            case 'cyan':
+              return (opacity: number) => `rgba(0, 188, 212, ${opacity})`;
+            case 'standard':
+            default:
+              return (opacity: number) => `rgba(59, 130, 246, ${opacity})`;
+          }
         default:
           return (opacity: number) => `rgba(59, 130, 246, ${opacity})`;
       }
@@ -198,7 +212,7 @@ const FluidAnimation: React.FC<FluidAnimationProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [colorPalette, intensity, speed, particleDensity, interactiveRadius]);
+  }, [colorPalette, intensity, speed, particleDensity, interactiveRadius, blueVariant]);
 
   return (
     <canvas 
