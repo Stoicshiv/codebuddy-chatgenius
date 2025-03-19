@@ -9,6 +9,7 @@ import Projects from "@/components/home/Projects";
 import Team from "@/components/home/Team";
 import Contact from "@/components/home/Contact";
 import ChatBot from "@/components/ui/ChatBot";
+import AnimatedBackground from "@/components/shared/AnimatedBackground";
 
 const Index: React.FC = () => {
   useEffect(() => {
@@ -48,13 +49,15 @@ const Index: React.FC = () => {
 
       <div className="flex flex-col min-h-screen">
         <Navbar />
-        <main className="flex-grow">
-          <Hero />
-          <Services />
-          <Projects />
-          <Team />
-          <Contact />
-        </main>
+        <AnimatedBackground variant="gradient1" intensity="medium" withShapes>
+          <main className="flex-grow">
+            <Hero />
+            <Services />
+            <Projects />
+            <Team />
+            <Contact />
+          </main>
+        </AnimatedBackground>
         <Footer />
         <ChatBot />
       </div>
