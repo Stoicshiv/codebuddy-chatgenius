@@ -11,10 +11,12 @@ import Contact from "@/components/home/Contact";
 import ChatBot from "@/components/ui/ChatBot";
 import LoadingScreen from "@/components/animations/LoadingScreen";
 import ImmersiveScene from "@/components/animations/ImmersiveScene";
+import PageBackground from "@/components/animations/PageBackground";
 
 const Index: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showImmersive, setShowImmersive] = useState(false);
+  const [backgroundVisible, setBackgroundVisible] = useState(false);
 
   useEffect(() => {
     // Scroll to top on page load
@@ -24,6 +26,8 @@ const Index: React.FC = () => {
     const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
     if (hasSeenLoading) {
       setIsLoading(false);
+      // Show background immediately if loading screen is skipped
+      setBackgroundVisible(true);
     } else {
       // If not, show the loading screen
       document.body.style.overflow = 'hidden';
@@ -42,6 +46,9 @@ const Index: React.FC = () => {
     setIsLoading(false);
     document.body.style.overflow = 'auto';
     sessionStorage.setItem('hasSeenLoading', 'true');
+    
+    // Show background after loading completes
+    setBackgroundVisible(true);
     
     // Show immersive scene after loading completes
     setTimeout(() => {
@@ -83,10 +90,20 @@ const Index: React.FC = () => {
         />
       </Helmet>
 
+      {/* Page background effect with fade-in after loading */}
+      {backgroundVisible && (
+        <PageBackground 
+          type="fluid" 
+          colorScheme="rainbow" 
+          intensity="normal" 
+          fadeIn={true}
+        />
+      )}
+
       {isLoading ? (
         <LoadingScreen onLoadingComplete={handleLoadingComplete} />
       ) : (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen relative z-0">
           <Navbar />
           <main className="flex-grow">
             <Hero />

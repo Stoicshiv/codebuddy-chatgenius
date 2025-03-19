@@ -7,7 +7,6 @@ import CodeSnippet from "../shared/CodeSnippet";
 import AnimatedSection from "../shared/AnimatedSection";
 import InteractiveParticles from "../3d/InteractiveParticles";
 import useSoundEffects from "@/hooks/use-sound-effects";
-import FluidAnimation from "../animations/FluidAnimation";
 
 // Fallback component for 3D elements
 const FallbackComponent = () => (
@@ -73,8 +72,7 @@ const Hero: React.FC = () => {
                 Professional Coding Services
               </div>
               
-              {/* Fluid Animation */}
-              <FluidAnimation className="my-8" />
+              {/* Page Background handles fluid animation now */}
               
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 We Build Amazing{" "}
@@ -159,10 +157,9 @@ const Hero: React.FC = () => {
                 Professional Coding Services
               </div>
               
-              {/* Interactive fluid animation instead of 3D logo */}
-              <div className="h-[150px] w-full relative my-8 rounded-xl overflow-hidden border border-white/10">
-                <FluidAnimation />
-                <div className="absolute inset-0 flex items-center justify-center">
+              {/* PixelForge title with glassmorphism effect */}
+              <div className="h-[100px] w-full relative my-8">
+                <div className="absolute inset-0 flex items-center justify-start">
                   <h2 className="text-5xl font-bold text-white text-gradient-future">PixelForge</h2>
                 </div>
               </div>
@@ -211,7 +208,7 @@ const Hero: React.FC = () => {
 
           <AnimatedSection direction="right" className="relative">
             <div className="relative mx-auto max-w-lg lg:max-w-none">
-              {/* Add interactive particles as background with error handling */}
+              {/* Add interactive particles as background */}
               <div className="absolute inset-0 -z-10">
                 <Suspense fallback={<FallbackComponent />}>
                   <InteractiveParticles className="w-full h-full" />
